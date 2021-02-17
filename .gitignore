@@ -3,3 +3,9 @@
 ################################################################################
 
 /.vs
+/src/HowToDevelop.Core/bin/Debug/netcoreapp3.1
+/src/HowToDevelop.Core/obj
+/src/HowToDevelop.HealthFood.Models/bin/Debug/netcoreapp3.1
+/src/HowToDevelop.HealthFood.Models/obj
+/tests/HowToDevelop.Dominio.Tests/bin/Debug/netcoreapp3.1
+/tests/HowToDevelop.Dominio.Tests/obj
