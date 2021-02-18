@@ -1,36 +1,98 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core;
+using HowToDevelop.Core.Interfaces;
+using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.HealthFood.Dominio.Produtos
 {
-    public sealed class Produto: Entidade<int>
+    public sealed class Produto: Entidade<int>, IRaizAgregacao
     {
-
-        public Produto()
+        [ExcludeFromCodeCoverage]
+        private Produto()
         {
-            TipoProduto = TipoProduto.Outros;
+            
         }
 
-        public Produto(int id)
+        private Produto(in string codigoBarras, 
+            in string descricao, 
+            in Preco preco, 
+            TipoProduto tipo, 
+            int id)
             :base(id)
         {
-            TipoProduto = TipoProduto.Outros;
+            CodigoBarras = codigoBarras;
+            Descricao = descricao;
+            Preco = preco;
+            TipoProduto = tipo;
         }
 
-        public string CodigoBarras { get; set; }
-        public string Descricao { get; set; }
-        public decimal Preco { get; set; }
-        public TipoProduto TipoProduto { get; set; }
+        public string CodigoBarras { get; private set; }
+        public string Descricao { get; private set; }
+        public Preco Preco { get; private set; }
+        public TipoProduto TipoProduto { get; }
 
-        public override Result EhValido()
+        public Result AlterarDados(in string codigoBarras, in string descricao, in Preco preco)
+        {
+            var (_, isFailure, error) = ValidarDadosProduto(codigoBarras, descricao, preco);
+            
+            if (isFailure)
+            {
+                return Result.Failure(error);
+            }
+
+            CodigoBarras = codigoBarras;
+            Descricao = descricao;
+            Preco = preco;
+
+            return Result.Success();
+        }
+
+        private static Result ValidarDadosProduto(in string codigoBarras, in string descricao, in Preco preco)
         {
             return Result.Combine(
-                CodigoBarras.NaoDeveSerNuloOuVazio(ProdutosConstantes.ProdutoCodigoBarrasEhObrigatorio),
-                CodigoBarras.TamanhoMenorOuIgual(ProdutosConstantes.ProdutoTamanhoCampoCodigoBarras, ProdutosConstantes.ProdutoCodigoBarrasDeveTerNoMaximoNCaracteres),
-                Descricao.NaoDeveSerNuloOuVazio(ProdutosConstantes.ProdutoDescricaoEhObrigatorio),
-                Descricao.TamanhoMenorOuIgual(ProdutosConstantes.ProdutoTamanhoCampoDescricao, ProdutosConstantes.ProdutoDescricaoDeveTerNoMaximoNCaracteres),
-                Preco.DeveSerMaiorQue(0, ProdutosConstantes.ProdutoPrecoNaoPodeSerMenorOuIgualZero));
+                            codigoBarras.NaoDeveSerNuloOuVazio(ProdutosConstantes.ProdutoCodigoBarrasEhObrigatorio),
+                            codigoBarras.TamanhoMenorOuIgual(ProdutosConstantes.ProdutoTamanhoCampoCodigoBarras, ProdutosConstantes.ProdutoCodigoBarrasDeveTerNoMaximoNCaracteres),
+                            descricao.NaoDeveSerNuloOuVazio(ProdutosConstantes.ProdutoDescricaoEhObrigatorio),
+                            descricao.TamanhoMenorOuIgual(ProdutosConstantes.ProdutoTamanhoCampoDescricao, ProdutosConstantes.ProdutoDescricaoDeveTerNoMaximoNCaracteres),
+                            preco.NaoDeveSerNulo(ProdutosConstantes.ProdutoPrecoNaoFoiInformado));
+        }
+
+        public static Result<Produto> CriarTipoBebida(in string codigoBarras, in string descricao, in Preco preco, in int id = 0)
+        {
+            var (_, isFailure, error) = ValidarDadosProduto(codigoBarras, descricao, preco);
+
+            if (isFailure)
+            {
+                return Result.Failure<Produto>(error);
+            }
+
+            return Result.Success(new Produto(codigoBarras, descricao, preco, TipoProduto.Bebida, id));
+        }
+
+        public static Result<Produto> CriarTipoLanche(in string codigoBarras, in string descricao, in Preco preco, in int id = 0)
+        {
+            var (_, isFailure, error) = ValidarDadosProduto(codigoBarras, descricao, preco);
+
+            if (isFailure)
+            {
+                return Result.Failure<Produto>(error);
+            }
+
+            return Result.Success(new Produto(codigoBarras, descricao, preco, TipoProduto.Lanche, id));
+        }
+
+        public static Result<Produto> CriarTipoOutros(in string codigoBarras, in string descricao, in Preco preco, in int id = 0)
+        {
+            var (_, isFailure, error) = ValidarDadosProduto(codigoBarras, descricao, preco);
+
+            if (isFailure)
+            {
+                return Result.Failure<Produto>(error);
+            }
+
+            return Result.Success(new Produto(codigoBarras, descricao, preco, TipoProduto.Outros, id));
         }
     }
 }

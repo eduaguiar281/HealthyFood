@@ -15,9 +15,7 @@ namespace HowToDevelop.Core
             Id = id;
         }
 
-        public virtual Result EhValido()
-        {
-            throw new NotImplementedException();
-        }
+        public DateTime DataCriacao { get; protected set; }
+        public DateTime DataAlteracao { get; protected set; }
     }
 }

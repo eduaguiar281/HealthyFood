@@ -1,40 +1,32 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core;
+using HowToDevelop.Core.Interfaces;
+using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
-using HowToDevelop.HealthFood.Dominio.Produtos;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 
 namespace HowToDevelop.HealthFood.Dominio.Pedidos
 {
-    public sealed class Pedido: Entidade<int>
+    public sealed class Pedido: Entidade<int>, IRaizAgregacao
     {
-
+        [ExcludeFromCodeCoverage]
         private Pedido()
         {
             _itens = new List<ItensPedido>();
         }
-        public Pedido(int mesaId, int garcomId, string nomeCliente)
-        {
-            MesaId = mesaId;
-            GarcomId = garcomId;
-            NomeCliente = nomeCliente;
-            _total = 0;
-            _desconto = 0;
-            _itens = new List<ItensPedido>();
-        }
 
-        public Pedido(int id, int mesaId, int garcomId, string nomeCliente)
+        private Pedido(int id, in int mesaId, in int garcomId, in string nomeCliente)
             :base(id)
         {
             MesaId = mesaId;
             GarcomId = garcomId;
             NomeCliente = nomeCliente;
-            _total = 0;
             _desconto = 0;
             _itens = new List<ItensPedido>();
+            CalcularTotal();
         }
 
         public int MesaId { get; }
@@ -43,17 +35,17 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
         public string NomeCliente { get; private set; }
 
-        private decimal _total;
-        public decimal Total => _total;
+        private Total _total;
+        public Total Total => _total;
 
         private decimal _desconto;
         public decimal Desconto => _desconto;
 
-        private List<ItensPedido> _itens;
+        private readonly List<ItensPedido> _itens;
 
         public IReadOnlyCollection<ItensPedido> Itens => _itens.AsReadOnly();
 
-        public Result AdicionarItem(in int produtoId, in int quantidade, decimal preco, int id = 0)
+        public Result AdicionarItem(in int produtoId, in Quantidade quantidade, Preco preco, int id = 0)
         {
             var (_, isFailure, item, error) = ItensPedido.Criar(produtoId, quantidade, preco, id);
             
@@ -65,7 +57,8 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
             return Result.Success();
         }
-        public Result AlterarItem(int itemId, in int quantidade, decimal preco)
+
+        public Result AlterarItem(int itemId, in Quantidade quantidade, Preco preco)
         {
             Maybe<ItensPedido> item = _itens.FirstOrDefault(i => i.Id == itemId);
             
@@ -98,17 +91,29 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
         private void CalcularTotal()
         {
-            _total = _itens.Sum(t => t.TotalItem);
+            _total = (Total)_itens.Sum(t => t.TotalItem.Valor);
         }
 
-        public override Result EhValido()
+        private static Result ValidarDadosPedido(in int garcomId, in int mesaId, in string nomeCliente)
         {
             return Result.Combine(
-                GarcomId.DeveSerMaiorQue(0, PedidosConstantes.PedidosGarcomIdNaoEhValido),
-                MesaId.DeveSerMaiorQue(0, PedidosConstantes.PedidosMesaIdNaoEhValido),
-                NomeCliente.NaoDeveSerNuloOuVazio(PedidosConstantes.PedidosNomeClienteEhObrigatorio),
-                NomeCliente.TamanhoMenorOuIgual(PedidosConstantes.PedidosTamanhoNomeCliente, 
+                garcomId.DeveSerMaiorQue(0, PedidosConstantes.PedidosGarcomIdNaoEhValido),
+                mesaId.DeveSerMaiorQue(0, PedidosConstantes.PedidosMesaIdNaoEhValido),
+                nomeCliente.NaoDeveSerNuloOuVazio(PedidosConstantes.PedidosNomeClienteEhObrigatorio),
+                nomeCliente.TamanhoMenorOuIgual(PedidosConstantes.PedidosTamanhoNomeCliente, 
                                                 PedidosConstantes.PedidosNomeClienteDeveTerNoMaxmimoNCaracteres));
         }
+
+        public static Result<Pedido> Criar(in int mesaId, in int garcomId, in string nomeCliente, int id = 0)
+        {
+            var (_, isFailure, error) = ValidarDadosPedido(garcomId, mesaId, nomeCliente);
+            if (isFailure)
+            {
+                return Result.Failure<Pedido>(error);
+            }
+
+            return Result.Success(new Pedido(id, mesaId, garcomId, nomeCliente));
+        }
+
     }
 }

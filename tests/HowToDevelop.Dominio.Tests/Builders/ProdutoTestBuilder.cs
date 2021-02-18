@@ -1,11 +1,13 @@
-﻿using HowToDevelop.HealthFood.Dominio.Produtos;
+﻿using CSharpFunctionalExtensions;
+using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.HealthFood.Dominio.Produtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
 {
-    public class ProdutoTestBuilder : ITestBuilder<Produto>
+    public class ProdutoTestBuilder : ITestBuilder<Result<Produto>>
     {
 
         public ProdutoTestBuilder()
@@ -13,17 +15,11 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
             Reiniciar();
         }
         
-        public int Id { get; private set; }
         public string CodigoBarras { get; private set; }
         public string Descricao { get; private set; }
-        public decimal Preco { get; private set; }
-        public TipoProduto TipoProduto { get; private set; }
+        public Preco Preco { get; private set; }
+        public TipoProduto Tipo { get; private set; }
 
-        public ProdutoTestBuilder ComId(int id)
-        {
-            Id = id;
-            return this;
-        }
         public ProdutoTestBuilder ComCodigoBarras(string codigoBarras)
         {
             CodigoBarras = codigoBarras;
@@ -36,36 +32,47 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
             return this;
         }
 
-        public ProdutoTestBuilder ComPreco(decimal preco)
+        public ProdutoTestBuilder ComPreco(Preco preco)
         {
             Preco = preco;
             return this;
         }
-        
-        public ProdutoTestBuilder ComTipoProduto(TipoProduto tipo)
+
+        public ProdutoTestBuilder ComTipo(TipoProduto tipo)
         {
-            TipoProduto = tipo;
+            Tipo = tipo;
             return this;
         }
 
-        public Produto Build()
+        public Result<Produto> Build()
         {
-            return new Produto(Id)
+            switch(Tipo)
             {
-                CodigoBarras = this.CodigoBarras,
-                Descricao = this.Descricao,
-                Preco = this.Preco,
-                TipoProduto = this.TipoProduto
-            };
+                case TipoProduto.Bebida:
+                {
+                    return Produto.CriarTipoBebida(CodigoBarras, Descricao, Preco, 1);
+                }
+                case TipoProduto.Lanche:
+                {
+                    return Produto.CriarTipoLanche(CodigoBarras, Descricao, Preco, 1);
+                }
+                case TipoProduto.Outros:
+                {
+                    return Produto.CriarTipoOutros(CodigoBarras, Descricao, Preco, 1);
+                }
+                default:
+                {
+                    return Produto.CriarTipoOutros(CodigoBarras, Descricao, Preco, 1);
+                }
+            }
         }
 
         public void Reiniciar()
         {
-            Id = 1;
             CodigoBarras = "7891213030969";
             Descricao = "Coca-Cola";
-            Preco = 3.99m;
-            TipoProduto = TipoProduto.Bebida;
+            Preco = new Preco(3.99m);
+            Tipo = TipoProduto.Bebida;
         }
     }
 }

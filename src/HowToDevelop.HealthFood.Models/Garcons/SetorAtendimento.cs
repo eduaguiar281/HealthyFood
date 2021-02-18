@@ -1,32 +1,44 @@
-﻿using HowToDevelop.Core;
+﻿using CSharpFunctionalExtensions;
+using HowToDevelop.Core;
+using HowToDevelop.Core.ValidacoesPadrao;
 using HowToDevelop.HealthFood.Dominio.Setores;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.HealthFood.Dominio.Garcons
 {
     public sealed class SetorAtendimento: Entidade<int>
     {
+        [ExcludeFromCodeCoverage]
         private SetorAtendimento()
         {
 
         }
 
-        public SetorAtendimento(int id, Garcom garcom, Setor setor)
+        private SetorAtendimento(in int garcomId, in int setorId, in int id)
             :base(id)
         {
-            _garcom = garcom;
-            _setor = setor;
+            _garcomId = garcomId;
+            _setorId = setorId;
         }
 
-        public SetorAtendimento(Garcom garcom, Setor setor)
+        public int SetorId => _setorId;
+
+        private readonly int _garcomId;
+        private readonly int _setorId;
+
+
+        public static Result<SetorAtendimento> Criar(in int garcomId, in int setorId, in int id = 0)
         {
-            _garcom = garcom;
-            _setor = setor;
+            var (_, isFailure, error) = Result.Combine(
+                garcomId.DeveSerMaiorQueZero(GarconsConstantes.GarcomIdNaoEhValido),
+                setorId.DeveSerMaiorQueZero(GarconsConstantes.SetorIdNaoEhValido));
+
+            if (isFailure)
+            {
+                return Result.Failure<SetorAtendimento>(error);
+            }
+
+            return Result.Success(new SetorAtendimento(garcomId, setorId, id));
         }
-
-        private Garcom _garcom;
-        private Setor _setor;
-
-        public Setor Setor => _setor;
-        public Garcom Garcom => _garcom;
     }
 }

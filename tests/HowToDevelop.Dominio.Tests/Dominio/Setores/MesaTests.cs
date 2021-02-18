@@ -13,14 +13,14 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Setores
         }
 
         [Fact(DisplayName = "Mesa Válida Deve Ter Sucesso")]
-        [Trait(nameof(Mesa), "Validar")]
-        public void Setor_Criar_DeveCriarComSucesso()
+        [Trait(nameof(Mesa), "Criar")]
+        public void Setor_Criar_DeveTerSucesso()
         {
             //Arrange & Act
             var setor = new MesaTestBuilder().Build();
 
             //Assert
-            setor.EhValido().IsSuccess.ShouldBeTrue();
+            setor.IsSuccess.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "Numeracao Igual a Zero Falhar")]
@@ -32,7 +32,7 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Setores
                 .ComNumeracao(0);
 
             //Act
-            var result = builder.Build().EhValido();
+            var result = builder.Build();
 
             //Assert
             result.IsFailure.ShouldBeTrue();

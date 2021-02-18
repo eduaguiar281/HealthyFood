@@ -1,15 +1,14 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core;
+using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HowToDevelop.HealthFood.Dominio.Pedidos
 {
     public sealed class ItensPedido: Entidade<int>
     {
-        private ItensPedido(in int produtoId, in int quantidade, in decimal preco, int id = 0)
+        private ItensPedido(in int produtoId, in Quantidade quantidade, in Preco preco, int id)
             :base(id)
         {
             ProdutoId = produtoId;
@@ -18,13 +17,13 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
             CalcularTotal();
         }
         public int ProdutoId { get; }
-        public int Quantidade { get; private set; }
-        public decimal Preco { get; private set; }
+        public Quantidade Quantidade { get; private set; }
+        public Preco Preco { get; private set; }
 
-        private decimal _totalItem;
-        public decimal TotalItem => _totalItem;
+        private Total _totalItem;
+        public Total TotalItem => _totalItem;
 
-        public Result AlterarValores(in int quantidade, in decimal preco)
+        public Result AlterarValores(in Quantidade quantidade, in Preco preco)
         {
             var (_, isFailure, erro) = ValidarPrecoQuantidade(quantidade, preco);
 
@@ -41,31 +40,31 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
         private void CalcularTotal()
         {
-            _totalItem = Quantidade * Preco;
+            _totalItem = new Total(Quantidade * Preco);
         }
 
-        private Result ValidarPrecoQuantidade(in int quantidade, in decimal preco)
+        private static Result ValidarPrecoQuantidade(in Quantidade quantidade, in Preco preco)
         {
-            return Result.Combine(quantidade.DeveSerMaiorQue(0, PedidosConstantes.ItensPedidoQuantidadeDeveSerMaiorQueZero),
-                preco.DeveSerMaiorQue(0, PedidosConstantes.ItensPedidoPrecoDeveSerMaiorQueZero));
+            return Result.Combine(quantidade.NaoDeveSerNulo(PedidosConstantes.ItensPedidoQuantidadeEhObrigatorio),
+                preco.NaoDeveSerNulo(PedidosConstantes.ItensPedidoPrecoEhObrigatorio));
         }
 
-        public override Result EhValido()
+        private static Result ValidarDadosDoItem(in int produtoId, in Quantidade quantidade, in Preco preco)
         {
             return Result.Combine(
-                ProdutoId.DeveSerMaiorQue(0, PedidosConstantes.ItensPedidoProdutoIdNaoEhValido),
-                ValidarPrecoQuantidade(Quantidade, Preco));
+                produtoId.DeveSerMaiorQue(0, PedidosConstantes.ItensPedidoProdutoIdNaoEhValido),
+                ValidarPrecoQuantidade(quantidade, preco));
         }
 
-        public static Result<ItensPedido> Criar(in int produtoId, in int quantidade, in decimal preco, int id = 0)
+        public static Result<ItensPedido> Criar(in int produtoId, in Quantidade quantidade, in Preco preco, int id = 0)
         {
-            var item = new ItensPedido(produtoId, quantidade, preco, id);
+            var (_, isFailure, error) = Result.Combine(produtoId.DeveSerMaiorQue(0, PedidosConstantes.ItensPedidoProdutoIdNaoEhValido),
+                    ValidarDadosDoItem(produtoId, quantidade, preco));
 
-            var (_, isFailure, error) = item.EhValido();
             if (isFailure)
                 return Result.Failure<ItensPedido>(error);
 
-            return Result.Success(item);
+            return Result.Success(new ItensPedido(produtoId, quantidade, preco, id));
         }
     }
 }

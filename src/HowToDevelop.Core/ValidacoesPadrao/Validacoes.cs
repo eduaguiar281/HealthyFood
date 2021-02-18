@@ -49,6 +49,13 @@ namespace HowToDevelop.Core.ValidacoesPadrao
                 : Result.Success();
         }
 
+        public static Result DeveSerMenorOuIgualQue(this decimal valor, in decimal desejado, in string motivo)
+        {
+            return valor <= desejado
+                ? Result.Success()
+                : Result.Failure(motivo);
+        }
+
         public static Result DeveSerMaiorQueZero(this int valor, in string motivo)
             => valor.DeveSerMaiorQue(0, motivo);
 

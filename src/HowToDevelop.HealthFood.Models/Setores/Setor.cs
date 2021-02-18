@@ -1,48 +1,68 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core;
+using HowToDevelop.Core.Interfaces;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
 namespace HowToDevelop.HealthFood.Dominio.Setores
 {
-    public sealed class Setor: Entidade<int>
+    public sealed class Setor: Entidade<int>, IRaizAgregacao
     {
-        public Setor()
+        [ExcludeFromCodeCoverage]
+        private Setor()
         {
             _mesas = new List<Mesa>();
         }
 
-        public Setor(int id)
+        private Setor(in string nome, in string sigla, in int id = 0)
             :base(id)
         {
             _mesas = new List<Mesa>();
+            Nome = nome;
+            Sigla = sigla;
         }
 
         private readonly List<Mesa> _mesas;
        
         public IReadOnlyCollection<Mesa> Mesas => _mesas.AsReadOnly();
 
-        public string Nome { get; set; }
+        public string Nome { get; private set; }
 
-        public string Sigla { get; set; }
+        public string Sigla { get; private set; }
+
+
+        public Result AlterarDescricaoSetor(in string nome, in string sigla)
+        {
+            var (_, isFailure, error) = ValidarDescricoes(nome, sigla);
+
+            if (isFailure)
+            {
+                return Result.Failure(error);
+            }
+
+            Nome = nome;
+            Sigla = sigla;
+
+            return Result.Success();
+        }
 
         public Result AdicionarMesa(ushort numero)
         {
-            var mesa = new Mesa()
-            {
-                Numeracao = numero
-            };
+            var mesa = Mesa.Criar(numero, 1);
 
-            var (_, isFailure, error) = Result.Combine(mesa.EhValido(),
+            var (_, isFailure, error) = Result.Combine(mesa,
                 _mesas.AlgumNaoDeveSer(x => x.Numeracao == numero, string.Format(SetoresConstantes.JaExisteUmaMesaComEstaNumeracaoParaSetor, Id)));
 
             if (isFailure)
+            {
                 return Result.Failure(error);
-            
-            _mesas.Add(mesa);
+            }
+
+            _mesas.Add(mesa.Value);
 
             return Result.Success();
         }
@@ -52,23 +72,35 @@ namespace HowToDevelop.HealthFood.Dominio.Setores
             var (_, isFailure, error) = _mesas.AlgumDeveSer(x => x.Numeracao == numero, string.Format(SetoresConstantes.MesaInformadaNaoFoiLocalizada, numero));
 
             if (isFailure)
+            {
                 return Result.Failure(error);
+            }
 
             var mesaRemove = _mesas.FirstOrDefault(s => s.Numeracao == numero);
-
             _mesas.Remove(mesaRemove);
 
             return Result.Success();
 
         }
 
-        public override Result EhValido()
+        private static Result ValidarDescricoes(in string nome, in string sigla)
         {
-            return Result.Combine(Nome.NaoDeveSerNuloOuVazio(SetoresConstantes.SetorCampoNomeObrigatorio),
-                Nome.TamanhoMenorOuIgual(SetoresConstantes.SetorTamanhoMaximoNome, SetoresConstantes.SetorCampoNomeDeveTerAteNCaracteres),
-                Sigla.NaoDeveSerNuloOuVazio(SetoresConstantes.SetorCampoSiglaObrigatorio),
-                Sigla.TamanhoMenorOuIgual(SetoresConstantes.SetorTamanhoMaximoSigla, SetoresConstantes.SetorCampoSiglaDeveTerAteNCaracteres));
+            return Result.Combine(nome.NaoDeveSerNuloOuVazio(SetoresConstantes.SetorCampoNomeObrigatorio),
+                nome.TamanhoMenorOuIgual(SetoresConstantes.SetorTamanhoMaximoNome, SetoresConstantes.SetorCampoNomeDeveTerAteNCaracteres),
+                sigla.NaoDeveSerNuloOuVazio(SetoresConstantes.SetorCampoSiglaObrigatorio),
+                sigla.TamanhoMenorOuIgual(SetoresConstantes.SetorTamanhoMaximoSigla, SetoresConstantes.SetorCampoSiglaDeveTerAteNCaracteres));
+        }
 
+        public static Result<Setor> Criar(in string nome, in string sigla, in int id = 0)
+        {
+            var (_, isFailure, error) =  ValidarDescricoes(nome, sigla);
+
+            if (isFailure)
+            {
+                return Result.Failure<Setor>(error);
+            }
+
+            return Result.Success(new Setor(nome, sigla, id));
         }
     }
 }

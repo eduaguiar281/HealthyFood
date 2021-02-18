@@ -18,6 +18,6 @@ namespace HowToDevelop.HealthFood.Dominio.Produtos
 
         public static readonly string ProdutoCodigoBarrasDeveTerNoMaximoNCaracteres = $"Campo Código de Barras deve ter no máximo {ProdutoTamanhoCampoCodigoBarras} caracteres!";
 
-        public const string ProdutoPrecoNaoPodeSerMenorOuIgualZero = "Campo preço não pode ser inferior ou igual a zero!";
+        public const string ProdutoPrecoNaoFoiInformado = "Campo preço não foi informado!";
     }
 }

@@ -6,6 +6,7 @@ using CSharpFunctionalExtensions;
 using Xunit;
 using HowToDevelop.HealthFood.Dominio.Produtos;
 using HowToDevelop.HealthFood.Dominio.Tests.Builders;
+using HowToDevelop.Core.ObjetosDeValor;
 
 namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Produtos
 {
@@ -16,102 +17,178 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Produtos
 
         }
 
-        [Fact(DisplayName = "Válido Deve Ter Sucesso")]
-        [Trait(nameof(Produto), "Validar")]
-        public void Produto_Validar_DeveTerSucesso()
+        [Fact(DisplayName = "Criar Tipo Bebida Válido Deve Ter Sucesso")]
+        [Trait(nameof(Produto), "Criar")]
+        public void Produto_CriarTipoBebida_DeveTerSucesso()
         {
             //Arrange & Act
-            var produto = new ProdutoTestBuilder().Build();
+            var produto = new ProdutoTestBuilder()
+                .ComTipo(TipoProduto.Bebida)
+                .Build();
 
             //Assert
-            produto.EhValido().IsSuccess.ShouldBeTrue();
+            produto.IsSuccess.ShouldBeTrue();
+            produto.Value.TipoProduto.ShouldBe(TipoProduto.Bebida);
         }
 
-        [Fact(DisplayName = "Sem Codigo Barras Deve Falhar")]
-        [Trait(nameof(Produto), "Validar")]
-        public void Validar_SemCodigoBarras_DeveFalhar()
+        [Fact(DisplayName = "Criar Tipo Lanche Válido Deve Ter Sucesso")]
+        [Trait(nameof(Produto), "Criar")]
+        public void Produto_CriarTipoLanche_DeveTerSucesso()
         {
-            //Arrange
+            //Arrange & Act
+            var produto = new ProdutoTestBuilder()
+                .ComTipo(TipoProduto.Lanche)
+                .Build();
+
+            //Assert
+            produto.IsSuccess.ShouldBeTrue();
+            produto.Value.TipoProduto.ShouldBe(TipoProduto.Lanche);
+        }
+
+        [Fact(DisplayName = "Criar Tipo Lanche Válido Deve Falhar")]
+        [Trait(nameof(Produto), "Criar")]
+        public void Produto_CriarTipoLanche_DeveFalhar()
+        {
+            //Arrange & Act
+            var produto = new ProdutoTestBuilder()
+                .ComTipo(TipoProduto.Lanche)
+                .ComPreco(null)
+                .Build();
+
+            //Assert
+            produto.IsFailure.ShouldBeTrue();
+            produto.Error.ShouldContain(ProdutosConstantes.ProdutoPrecoNaoFoiInformado);
+        }
+
+
+        [Fact(DisplayName = "Criar Tipo Lanche Válido Deve Ter Sucesso")]
+        [Trait(nameof(Produto), "Criar")]
+        public void Produto_CriarTipoOutros_DeveTerSucesso()
+        {
+            //Arrange & Act
+            var produto = new ProdutoTestBuilder()
+                .ComTipo(TipoProduto.Outros)
+                .Build();
+
+            //Assert
+            produto.IsSuccess.ShouldBeTrue();
+            produto.Value.TipoProduto.ShouldBe(TipoProduto.Outros);
+        }
+
+        [Fact(DisplayName = "Criar Tipo Outros Válido Deve Falhar")]
+        [Trait(nameof(Produto), "Criar")]
+        public void Produto_CriarTipoOutros_DeveFalhar()
+        {
+            //Arrange & Act
+            var produto = new ProdutoTestBuilder()
+                .ComTipo(TipoProduto.Outros)
+                .ComPreco(null)
+                .Build();
+
+            //Assert
+            produto.IsFailure.ShouldBeTrue();
+            produto.Error.ShouldContain(ProdutosConstantes.ProdutoPrecoNaoFoiInformado);
+        }
+
+
+        [Fact(DisplayName = "Sem Codigo Barras Deve Falhar")]
+        [Trait(nameof(Produto), "Criar")]
+        public void Criar_SemCodigoBarras_DeveFalhar()
+        {
+            //Arrange & Act
             var produto = new ProdutoTestBuilder()
                 .ComCodigoBarras("")
                 .Build();
 
-            //Act 
-            Result result = produto.EhValido();
-
             //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(ProdutosConstantes.ProdutoCodigoBarrasEhObrigatorio);
+            produto.IsFailure.ShouldBeTrue();
+            produto.Error.ShouldContain(ProdutosConstantes.ProdutoCodigoBarrasEhObrigatorio);
         }
 
         [Fact(DisplayName = "Código de Barras Acima do Limite de Caracteres Deve Falhar")]
-        [Trait(nameof(Produto), "Validar")]
-        public void Validar_CodigoBarrasAcimaLimiteCaracteres_DeveFalhar()
+        [Trait(nameof(Produto), "Criar")]
+        public void Criar_CodigoBarrasAcimaLimiteCaracteres_DeveFalhar()
         {
-            //Arrange
+            //Arrange & Act
             var produto = new ProdutoTestBuilder()
                 .ComCodigoBarras("78912313030969".PadRight(ProdutosConstantes.ProdutoTamanhoCampoCodigoBarras + 5))
                 .Build();
 
-            //Act 
-            Result result = produto.EhValido();
-
             //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(ProdutosConstantes.ProdutoCodigoBarrasDeveTerNoMaximoNCaracteres);
+            produto.IsFailure.ShouldBeTrue();
+            produto.Error.ShouldContain(ProdutosConstantes.ProdutoCodigoBarrasDeveTerNoMaximoNCaracteres);
         }
 
         [Fact(DisplayName = "Sem Descricao Deve Falhar")]
-        [Trait(nameof(Produto), "Validar")]
-        public void Validar_SemDescricao_DeveFalhar()
+        [Trait(nameof(Produto), "Criar")]
+        public void Criar_SemDescricao_DeveFalhar()
         {
-            //Arrange
+            //Arrange & Act
             var produto = new ProdutoTestBuilder()
                 .ComDescricao("")
                 .Build();
 
-            //Act 
-            Result result = produto.EhValido();
-
             //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(ProdutosConstantes.ProdutoDescricaoEhObrigatorio);
+            produto.IsFailure.ShouldBeTrue();
+            produto.Error.ShouldContain(ProdutosConstantes.ProdutoDescricaoEhObrigatorio);
         }
 
         [Fact(DisplayName = "Descrição Acima do Limite de Caracteres Deve Falhar")]
-        [Trait(nameof(Produto), "Validar")]
-        public void Validar_DescricaoAcimaLimiteCaracteres_DeveFalhar()
+        [Trait(nameof(Produto), "Criar")]
+        public void Criar_DescricaoAcimaLimiteCaracteres_DeveFalhar()
         {
-            //Arrange
+            //Arrange & Act
             var produto = new ProdutoTestBuilder()
                 .ComDescricao("Coca-Cola".PadRight(ProdutosConstantes.ProdutoTamanhoCampoDescricao + 5))
                 .Build();
 
-            //Act 
-            Result result = produto.EhValido();
-
             //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(ProdutosConstantes.ProdutoDescricaoDeveTerNoMaximoNCaracteres);
+            produto.IsFailure.ShouldBeTrue();
+            produto.Error.ShouldContain(ProdutosConstantes.ProdutoDescricaoDeveTerNoMaximoNCaracteres);
         }
 
-        [Theory(DisplayName = "Preço Inferior ou igual a Zero Deve Falhar")]
-        [Trait(nameof(Produto), "Validar")]
-        [InlineData(0)]
-        [InlineData(-1)]
-        public void Validar_PrecoInferiorZero_DeveFalhar(decimal preco)
+        [Fact(DisplayName = "Alteração Valores Validos Deve Ter Sucesso")]
+        [Trait(nameof(Produto), nameof(Produto.AlterarDados))]
+        public void AlterarDados_ValoresValidos_DeveTerSucesso()
         {
-            //Arrange
+            //Arrange 
             var produto = new ProdutoTestBuilder()
-                .ComPreco(preco)
-                .Build();
+                .Build().Value;
+            string novoCodigoBarras = "7891112031968";
+            string novaDescricao = "Fanta Laranja";
+            Preco novoPreco = new Preco(2.99m);
 
-            //Act 
-            Result result = produto.EhValido();
+            //Act
+            Result result = produto.AlterarDados(novoCodigoBarras, novaDescricao, novoPreco);
+
+            //Assert
+            result.IsSuccess.ShouldBeTrue();
+            produto.CodigoBarras.ShouldBe(novoCodigoBarras);
+            produto.Preco.ShouldBe(novoPreco);
+            produto.Descricao.ShouldBe(novaDescricao);
+        }
+
+        [Fact(DisplayName = "Alteração Valores Inválidos Deve Falhar")]
+        [Trait(nameof(Produto), nameof(Produto.AlterarDados))]
+        public void AlterarDados_ValoresInvalidos_DeveFalhar()
+        {
+            //Arrange 
+            var produto = new ProdutoTestBuilder()
+                .Build().Value;
+            string novoCodigoBarras = "7891112031968";
+            string novaDescricao = "Fanta Laranja";
+            Preco novoPreco = null;
+
+            //Act
+            Result result = produto.AlterarDados(novoCodigoBarras, novaDescricao, novoPreco);
 
             //Assert
             result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(ProdutosConstantes.ProdutoPrecoNaoPodeSerMenorOuIgualZero);
+            result.Error.ShouldContain(ProdutosConstantes.ProdutoPrecoNaoFoiInformado);
+            produto.CodigoBarras.ShouldNotBe(novaDescricao);
+            produto.Preco.ShouldNotBe(novoPreco);
+            produto.Descricao.ShouldNotBe(novaDescricao);
         }
+
     }
 }

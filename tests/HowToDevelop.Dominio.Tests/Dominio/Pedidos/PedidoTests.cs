@@ -3,7 +3,7 @@ using HowToDevelop.HealthFood.Dominio.Tests.Builders;
 using Shouldly;
 using CSharpFunctionalExtensions;
 using Xunit;
-using System.Collections.Generic;
+using HowToDevelop.Core.ObjetosDeValor;
 
 namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Pedidos
 {
@@ -14,83 +14,71 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Pedidos
 
         }
 
-        [Fact(DisplayName = "Válido Deve Ter Sucesso")]
-        [Trait(nameof(Pedido), "Validar")]
-        public void Pedido_Validar_DeveTerSucesso()
+        [Fact(DisplayName = "Criar Válido Deve Ter Sucesso")]
+        [Trait(nameof(Pedido), nameof(Pedido.Criar))]
+        public void Pedido_Criar_DeveTerSucesso()
         {
             //Arrange & Act
             var pedido = new PedidoTestBuilder().Build();
 
             //Assert
-            pedido.EhValido().IsSuccess.ShouldBeTrue();
+            pedido.IsSuccess.ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "GarconId Inválido Deve Falhar")]
-        [Trait(nameof(Pedido), "Validar")]
+        [Fact(DisplayName = "Criar com GarconId Inválido Deve Falhar")]
+        [Trait(nameof(Pedido), nameof(Pedido.Criar))]
         public void Validar_GarcomIdInvalido_DeveFalhar()
         {
-            //Arrange 
+            //Arrange & Act
             var pedido = new PedidoTestBuilder()
                 .ComGarcomId(0)
                 .Build();
 
-            //Act
-            Result result = pedido.EhValido();
-            
             //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(PedidosConstantes.PedidosGarcomIdNaoEhValido);
+            pedido.IsFailure.ShouldBeTrue();
+            pedido.Error.ShouldContain(PedidosConstantes.PedidosGarcomIdNaoEhValido);
         }
 
-        [Fact(DisplayName = "MesaId Inválido Deve Falhar")]
-        [Trait(nameof(Pedido), "Validar")]
-        public void Validar_MesaIdInvalido_DeveFalhar()
+        [Fact(DisplayName = "Criar com MesaId Inválido Deve Falhar")]
+        [Trait(nameof(Pedido), nameof(Pedido.Criar))]
+        public void Criar_MesaIdInvalido_DeveFalhar()
         {
-            //Arrange 
+            //Arrange & Act
             var pedido = new PedidoTestBuilder()
                 .ComMesaId(0)
                 .Build();
 
-            //Act
-            Result result = pedido.EhValido();
-
             //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(PedidosConstantes.PedidosMesaIdNaoEhValido);
+            pedido.IsFailure.ShouldBeTrue();
+            pedido.Error.ShouldContain(PedidosConstantes.PedidosMesaIdNaoEhValido);
         }
 
-        [Fact(DisplayName = "Nome Cliente vazio Deve Falhar")]
-        [Trait(nameof(Pedido), "Validar")]
-        public void Validar_NomeClienteVazio_DeveFalhar()
+        [Fact(DisplayName = "Criar com Nome Cliente vazio Deve Falhar")]
+        [Trait(nameof(Pedido), nameof(Pedido.Criar))]
+        public void Criar_NomeClienteVazio_DeveFalhar()
         {
-            //Arrange 
+            //Arrange & Act
             var pedido = new PedidoTestBuilder()
                 .ComNomeCliente("")
                 .Build();
 
-            //Act
-            Result result = pedido.EhValido();
-
             //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(PedidosConstantes.PedidosNomeClienteEhObrigatorio);
+            pedido.IsFailure.ShouldBeTrue();
+            pedido.Error.ShouldContain(PedidosConstantes.PedidosNomeClienteEhObrigatorio);
         }
 
-        [Fact(DisplayName = "Nome Cliente Acima Número Caracteres Acima Limite Deve Falhar")]
-        [Trait(nameof(Pedido), "Validar")]
-        public void Validar_NomeClienteNumeroCaracteresAcimaLimite_DeveFalhar()
+        [Fact(DisplayName = "Criar com Nome Cliente Acima Número Caracteres Acima Limite Deve Falhar")]
+        [Trait(nameof(Pedido), nameof(Pedido.Criar))]
+        public void Criar_NomeClienteNumeroCaracteresAcimaLimite_DeveFalhar()
         {
-            //Arrange 
+            //Arrange & Act
             var pedido = new PedidoTestBuilder()
                 .ComNomeCliente("João da Silva".PadRight(PedidosConstantes.PedidosTamanhoNomeCliente + 5))
                 .Build();
 
-            //Act
-            Result result = pedido.EhValido();
-
             //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(PedidosConstantes.PedidosNomeClienteDeveTerNoMaxmimoNCaracteres);
+            pedido.IsFailure.ShouldBeTrue();
+            pedido.Error.ShouldContain(PedidosConstantes.PedidosNomeClienteDeveTerNoMaxmimoNCaracteres);
         }
 
         [Fact(DisplayName = "Adicionar Item Válido deve ter Sucesso")]
@@ -98,35 +86,125 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Pedidos
         public void AdicionarItem_ItemValido_DeveTerSucesso()
         {
             //Arrange 
-            var pedido = new PedidoTestBuilder()
-                .ComItens(new List<ItensPedido> { ItensPedido.Criar(1, 10, 1.99m).Value })
-                .Build();
+            var pedido = new PedidoTestBuilder().Build().Value;
+            pedido.AdicionarItem(1, (Quantidade)10, (Preco)1.99m);
 
             //Act
-            Result result = pedido.AdicionarItem(2, 1, 1.99m);
+            Result result = pedido.AdicionarItem(2, (Quantidade)1, (Preco)1.99m);
 
             //Assert
             result.IsSuccess.ShouldBeTrue();
             pedido.Itens.Count.ShouldBe(2);
-            pedido.Total.ShouldBe(21.89m);
+            pedido.Total.Valor.ShouldBe(21.89m);
         }
 
-        [Fact(DisplayName = "Adicionar Item Inválido deve ter Sucesso")]
+        [Fact(DisplayName = "Adicionar Item Inválido deve falhar")]
         [Trait(nameof(Pedido), "AdicionarItem")]
-        public void AdicionarItem_ItemInvalido_DeveTerSucesso()
+        public void AdicionarItem_ItemInvalido_DeveFalhar()
         {
             //Arrange 
-            var pedido = new PedidoTestBuilder()
-                .ComItens(new List<ItensPedido> { ItensPedido.Criar(1, 10, 1.99m).Value })
-                .Build();
+            var pedido = new PedidoTestBuilder().Build().Value;
+            pedido.AdicionarItem(1, (Quantidade)10, (Preco)1.99m);
 
             //Act
-            Result result = pedido.AdicionarItem(2, 0, 1.99m);
+            Result result = pedido.AdicionarItem(2, null, (Preco)1.99m);
 
             //Assert
             result.IsFailure.ShouldBeTrue();
             pedido.Itens.Count.ShouldBe(1);
-            pedido.Total.ShouldBe(19.90m);
+            pedido.Total.Valor.ShouldBe(19.90m);
         }
+
+        [Fact(DisplayName = "Alterar Item Válido Deve ter Sucesso")]
+        [Trait(nameof(Pedido), "AlterarItem")]
+        public void AlterarItem_ItemValido_DeveTerSucesso()
+        {
+            //Arrange
+            var pedido = new PedidoTestBuilder().Build().Value;
+            pedido.AdicionarItem(1, (Quantidade)10, (Preco)1.99m);
+
+            //Act
+            Result result = pedido.AlterarItem(0, (Quantidade)10, (Preco)2.99m);
+
+            //Assert
+            result.IsSuccess.ShouldBeTrue();
+            pedido.Itens.Count.ShouldBe(1);
+            pedido.Total.Valor.ShouldBe(29.90m);
+        }
+
+        [Fact(DisplayName = "Alterar Item inválido Deve falhar")]
+        [Trait(nameof(Pedido), "AlterarItem")]
+        public void AlterarItem_ItemInvalido_DeveFalhar()
+        {
+            //Arrange
+            var pedido = new PedidoTestBuilder().Build().Value;
+            pedido.AdicionarItem(1, (Quantidade)10, (Preco)1.99m);
+
+            //Act
+            Result result = pedido.AlterarItem(0, null, (Preco)2.99m);
+
+            //Assert
+            result.IsFailure.ShouldBeTrue();
+            result.Error.ShouldContain(PedidosConstantes.ItensPedidoQuantidadeEhObrigatorio);
+            pedido.Itens.Count.ShouldBe(1);
+            pedido.Total.Valor.ShouldBe(19.90m);
+        }
+       
+        [Fact(DisplayName = "Alterar Item Inexsitente Deve falhar")]
+        [Trait(nameof(Pedido), "AlterarItem")]
+        public void AlterarItem_ItemInexistente_DeveFalhar()
+        {
+            //Arrange
+            var pedido = new PedidoTestBuilder().Build().Value;
+            int idItem = 1;
+            pedido.AdicionarItem(1, (Quantidade)10, (Preco)1.99m);
+
+            //Act
+            Result result = pedido.AlterarItem(idItem, null, (Preco)2.99m);
+
+            //Assert
+            result.IsFailure.ShouldBeTrue();
+            result.Error.ShouldContain(string.Format(PedidosConstantes.PedidosItemInformadoNaoFoiLocalizado, idItem));
+            pedido.Itens.Count.ShouldBe(1);
+            pedido.Total.Valor.ShouldBe(19.90m);
+        }
+
+        [Fact(DisplayName = "Remover Item Id Válido Deve ter Sucesso")]
+        [Trait(nameof(Pedido), "RemoverItem")]
+        public void RemoverItem_IdValido_DeveTerSucesso()
+        {
+            //Arrange
+            var pedido = new PedidoTestBuilder().Build().Value;
+            int idItem = 0;
+            pedido.AdicionarItem(1, (Quantidade)10, (Preco)1.99m);
+
+            //Act
+            Result result = pedido.RemoverItem(idItem);
+
+            //Assert
+            result.IsSuccess.ShouldBeTrue();
+            pedido.Itens.Count.ShouldBe(0);
+            pedido.Total.Valor.ShouldBe(0);
+        }
+
+        [Fact(DisplayName = "Remover Item Id Inválido Deve Falhar")]
+        [Trait(nameof(Pedido), "RemoverItem")]
+        public void RemoverItem_IdInvalido_DeveFalhar()
+        {
+            //Arrange
+            var pedido = new PedidoTestBuilder().Build().Value;
+            int idItem = 1;
+            pedido.AdicionarItem(1, (Quantidade)10, (Preco)1.99m);
+
+            //Act
+            Result result = pedido.RemoverItem(idItem);
+
+            //Assert
+            result.IsFailure.ShouldBeTrue();
+            result.Error.ShouldContain(string.Format(PedidosConstantes.PedidosItemInformadoNaoFoiLocalizado, idItem));
+            pedido.Itens.Count.ShouldBe(1);
+            pedido.Total.Valor.ShouldBe(19.90m);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.HealthFood.Dominio.Pedidos;
 using HowToDevelop.HealthFood.Dominio.Tests.Builders;
 using Shouldly;
@@ -25,66 +26,66 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Pedidos
             itensPedido.IsSuccess.ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "Quantidade Igual a Zero Deve Falhar")]
+        [Fact(DisplayName = "Quantidade Null Deve Falhar")]
         [Trait(nameof(ItensPedido), "Validar")]
-        public void Validar_QuantidadeIgualZero_DeveFalhar()
+        public void Validar_QuantidadeNull_DeveFalhar()
         {
             //Arrange & Act
             var itensPedido = new ItensPedidoTestBuilder()
-                .ComQuantidade(0)
+                .ComQuantidade(null)
                 .Build();
 
             //Assert
             itensPedido.IsFailure.ShouldBeTrue();
-            itensPedido.Error.Contains(PedidosConstantes.ItensPedidoQuantidadeDeveSerMaiorQueZero);
+            itensPedido.Error.Contains(PedidosConstantes.ItensPedidoQuantidadeEhObrigatorio);
         }
         
-        [Fact(DisplayName = "Preco Igual a Zero Deve Falhar")]
+        [Fact(DisplayName = "Preco Igual a Null Deve Falhar")]
         [Trait(nameof(ItensPedido), "Validar")]
-        public void Validar_PrecoIgualZero_DeveFalhar()
+        public void Validar_PrecoNull_DeveFalhar()
         {
             //Arrange & Act
             var itensPedido = new ItensPedidoTestBuilder()
-                .ComPreco(0)
+                .ComPreco(null)
                 .Build();
 
             //Assert
             itensPedido.IsFailure.ShouldBeTrue();
-            itensPedido.Error.Contains(PedidosConstantes.ItensPedidoPrecoDeveSerMaiorQueZero);
+            itensPedido.Error.Contains(PedidosConstantes.ItensPedidoPrecoEhObrigatorio);
         }
 
-        [Fact(DisplayName = "Preco Igual a Zero Deve Falhar")]
+        [Fact(DisplayName = "Preco Igual a Null Deve Falhar")]
         [Trait(nameof(ItensPedido), nameof(ItensPedido.AlterarValores))]
-        public void AlterarValores_PrecoIgualZero_DeveFalhar()
+        public void AlterarValores_PrecoNull_DeveFalhar()
         {
             //Arrange
             var itensPedido = new ItensPedidoTestBuilder()
                 .Build().Value;
             
             //Act
-            Result result = itensPedido.AlterarValores(10, 0);
+            Result result = itensPedido.AlterarValores((Quantidade)10, null);
 
             //Assert
             result.IsFailure.ShouldBeTrue();
-            result.Error.Contains(PedidosConstantes.ItensPedidoPrecoDeveSerMaiorQueZero);
+            result.Error.Contains(PedidosConstantes.ItensPedidoPrecoEhObrigatorio);
         }
 
 
-        [Fact(DisplayName = "Quantidade Igual a Zero Deve Falhar")]
+        [Fact(DisplayName = "Quantidade Igual a Null Deve Falhar")]
         [Trait(nameof(ItensPedido), nameof(ItensPedido.AlterarValores))]
-        public void AlterarValores_QuantidadeIgualZero_DeveFalhar()
+        public void AlterarValores_QuantidadeIgualNull_DeveFalhar()
         {
             //Arrange 
             var itensPedido = new ItensPedidoTestBuilder()
                 .Build().Value;
 
             //Act
-            Result result = itensPedido.AlterarValores(0, 3.99m);
+            Result result = itensPedido.AlterarValores(null, (Preco)3.99m);
 
 
             //Assert
             result.IsFailure.ShouldBeTrue();
-            result.Error.Contains(PedidosConstantes.ItensPedidoPrecoDeveSerMaiorQueZero);
+            result.Error.Contains(PedidosConstantes.ItensPedidoPrecoEhObrigatorio);
         }
 
         [Theory(DisplayName = "Valores válidos Deve Alterar Com Sucesso")]
@@ -101,11 +102,11 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Pedidos
                 .Build();
 
             //Act
-            itensPedido.Value.AlterarValores(quantidade, valor);
+            itensPedido.Value.AlterarValores((Quantidade)quantidade, (Preco)valor);
 
             //Assert
             itensPedido.IsSuccess.ShouldBeTrue();
-            itensPedido.Value.TotalItem.ShouldBe(resultado);
+            itensPedido.Value.TotalItem.Valor.ShouldBe(resultado);
         }
 
     }

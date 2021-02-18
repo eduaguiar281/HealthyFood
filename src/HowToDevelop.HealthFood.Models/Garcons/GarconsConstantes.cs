@@ -11,6 +11,8 @@ namespace HowToDevelop.HealthFood.Dominio.Garcons
 
         public const string SetorJaFoiVinculadoAoGarcom = "Setor já foi vinculado este garçom!";
         public const string SetorInformadoNaoFoiLocalizado = "Setor informado {0} não foi localizado!";
+        public const string SetorIdNaoEhValido = "SetorId não é válido!";
+        public const string GarcomIdNaoEhValido = "GarcomId não é válido!";
         public static readonly string NomeDeveTerAteCaracteres = $"Campo Nome é deve ter no máximo {GarcomTamanhoMaximoNome} caracteres!";
         public static readonly string ApelidoDeveTerAteCaracteres = $"Campo Nome é deve ter no máximo {GarcomTamanhoMaximoApelido} caracteres!";
         public const string GarcomDeveTerNoMinimoUmSetorVinculado = "Garçom deve ter no mínimo um setor vinculado!";

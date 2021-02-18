@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.HealthFood.Dominio.Pedidos;
 using System;
 using System.Collections.Generic;
@@ -12,27 +13,15 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
         {
             Reiniciar();               
         }
-        public int Id { get; private set; }
-        public int ProdutoId { get; private set; }
-        public int Quantidade { get; private set; }
-        public decimal Preco { get; private set; }
+        public Quantidade Quantidade { get; private set; }
+        public Preco Preco { get; private set; }
 
-        public ItensPedidoTestBuilder ComId(int id)
-        {
-            Id = id;
-            return this;
-        }
-        public ItensPedidoTestBuilder ComProdutoId(int produtoId)
-        {
-            ProdutoId = produtoId;
-            return this;
-        }
-        public ItensPedidoTestBuilder ComQuantidade(int quantidade)
+        public ItensPedidoTestBuilder ComQuantidade(Quantidade quantidade)
         {
             Quantidade = quantidade;
             return this;
         }
-        public ItensPedidoTestBuilder ComPreco(decimal preco)
+        public ItensPedidoTestBuilder ComPreco(Preco preco)
         {
             Preco = preco;
             return this;
@@ -41,15 +30,13 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
 
         public Result<ItensPedido> Build()
         {
-            return ItensPedido.Criar(ProdutoId, Quantidade, Preco, Id);
+            return ItensPedido.Criar(1, Quantidade, Preco, 1);
         }
 
         public void Reiniciar()
         {
-            Id = 1;
-            ProdutoId = 1;
-            Quantidade = 10;
-            Preco = 5.5m;
+            Quantidade = new Quantidade(10);
+            Preco = new Preco(5.5m);
         }
     }
 }
