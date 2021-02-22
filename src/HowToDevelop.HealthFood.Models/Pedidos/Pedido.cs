@@ -3,6 +3,7 @@ using HowToDevelop.Core;
 using HowToDevelop.Core.Interfaces;
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
+using HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -10,6 +11,8 @@ using System.Linq;
 
 namespace HowToDevelop.HealthFood.Dominio.Pedidos
 {
+    public enum StatusPedido { Novo, EmAndamento, Fechado, Cancelado }
+
     public sealed class Pedido: Entidade<int>, IRaizAgregacao
     {
         [ExcludeFromCodeCoverage]
@@ -24,9 +27,9 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
             MesaId = mesaId;
             GarcomId = garcomId;
             NomeCliente = nomeCliente;
-            _desconto = 0;
             _itens = new List<ItensPedido>();
             CalcularTotal();
+            Status = StatusPedido.Novo;
         }
 
         public int MesaId { get; }
@@ -35,11 +38,13 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
         public string NomeCliente { get; private set; }
 
+        public StatusPedido Status { get; private set; }
+
         private Total _total;
         public Total Total => _total;
 
-        private decimal _desconto;
-        public decimal Desconto => _desconto;
+        private Desconto _desconto;
+        public Desconto Desconto => _desconto;
 
         private readonly List<ItensPedido> _itens;
 
@@ -47,28 +52,48 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
         public Result AdicionarItem(in int produtoId, in Quantidade quantidade, Preco preco, int id = 0)
         {
+            Result result = PedidoPodeSerAlterado();
+            if (result.IsFailure)
+            {
+                return result;
+            }
+
             var (_, isFailure, item, error) = ItensPedido.Criar(produtoId, quantidade, preco, id);
-            
+
             if (isFailure)
+            {
                 return Result.Failure<ItensPedido>(error);
+            }
 
             _itens.Add(item);
+
             CalcularTotal();
+
+            AlteraStatusParaAndamento();
 
             return Result.Success();
         }
 
         public Result AlterarItem(int itemId, in Quantidade quantidade, Preco preco)
         {
+            Result result = PedidoPodeSerAlterado();
+            if (result.IsFailure)
+            {
+                return result;
+            }
             Maybe<ItensPedido> item = _itens.FirstOrDefault(i => i.Id == itemId);
-            
+
             if (item.HasNoValue)
+            {
                 return Result.Failure(string.Format(PedidosConstantes.PedidosItemInformadoNaoFoiLocalizado, itemId));
+            }
             
             var (_, isFailure, erro) = item.Value.AlterarValores(quantidade, preco);
 
             if (isFailure)
+            {
                 return Result.Failure(erro);
+            }
 
             CalcularTotal();
 
@@ -77,21 +102,48 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
         public Result RemoverItem(int itemId)
         {
+            Result result = PedidoPodeSerAlterado();
+            if (result.IsFailure)
+            {
+                return result;
+            }
             Maybe<ItensPedido> item = _itens.FirstOrDefault(i => i.Id == itemId);
 
             if (item.HasNoValue)
+            {
                 return Result.Failure(string.Format(PedidosConstantes.PedidosItemInformadoNaoFoiLocalizado, itemId));
+            }
 
             _itens.Remove(item.Value);
 
             CalcularTotal();
-
+            
             return Result.Success();
         }
 
         private void CalcularTotal()
         {
             _total = (Total)_itens.Sum(t => t.TotalItem.Valor);
+        }
+
+        private Result PedidoPodeSerAlterado()
+        {
+            if (Status == StatusPedido.Fechado)
+            {
+                return Result.Failure(PedidosConstantes.PedidoFechadoNaoPodeSerAlterado);
+            }
+
+            if (Status == StatusPedido.Cancelado)
+            {
+                return Result.Failure(PedidosConstantes.PedidoCanceladoNaoPodeSerAlterado);
+            }
+
+            return Result.Success();
+        }
+
+        private void AlteraStatusParaAndamento()
+        {
+            Status = StatusPedido.EmAndamento;
         }
 
         private static Result ValidarDadosPedido(in int garcomId, in int mesaId, in string nomeCliente)

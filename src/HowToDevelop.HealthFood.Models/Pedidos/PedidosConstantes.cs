@@ -15,7 +15,13 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
         public const string PedidosMesaIdNaoEhValido = "Id da Mesa não é Válido!";
         public const string PedidosNomeClienteEhObrigatorio = "Nome do Cliente é Obrigatório!";
 
+        public const string PedidoFechadoNaoPodeSerAlterado = "Pedido Fechado não pode ser alterado!";
+        public const string PedidoCanceladoNaoPodeSerAlterado = "Pedido Cancelado não pode ser alterado!";
+
         public const int PedidosTamanhoNomeCliente = 70;
         public static readonly string PedidosNomeClienteDeveTerNoMaxmimoNCaracteres = $"Nome do Cliente deve ter no máximo {PedidosTamanhoNomeCliente} caracteres!";
+
+        public static readonly string PercentualDescontoNaoDeveUltrapassarPercentualMaximo = $"Percentual não pode ser superior a {PercentualMaximo:0.0}%!";
+        public const decimal PercentualMaximo = 30m;
     }
 }

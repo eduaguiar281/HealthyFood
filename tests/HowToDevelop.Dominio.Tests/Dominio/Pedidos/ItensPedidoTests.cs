@@ -3,9 +3,6 @@ using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.HealthFood.Dominio.Pedidos;
 using HowToDevelop.HealthFood.Dominio.Tests.Builders;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Pedidos
