@@ -53,5 +53,21 @@ namespace HowToDevelop.Dominio.Tests.Dominio.Pedidos.ObjetosDeValor
             result.IsFailure.ShouldBeTrue();
             result.Error.ShouldContain(ComissaoConstantes.BaseCalculoNaoPodeSerIgualZero);
         }
+
+
+        [Fact(DisplayName = "Conversão implícita Deve ter Sucesso")]
+        [Trait(nameof(Comissao), "Conversão Implicita Deve Ter Sucesso")]
+        public void Comissao_ConversaoImplicita_DeveTerSucesso()
+        {
+            //Arrange 
+            var comissao = Comissao.Criar(100, 25, 5).Value;
+
+            //Act
+            decimal valor = comissao;
+
+            //Assert
+            valor.ShouldBe(comissao.Total);
+            valor.ShouldBe(30m);
+        }
     }
 }

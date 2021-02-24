@@ -40,7 +40,7 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor
             yield return Total;
         }
 
-        public static implicit operator decimal(Comissao d) => d.Valor;
+        public static implicit operator decimal(Comissao d) => d.Total;
 
         public static Result<Comissao> Criar(in decimal baseCalculo, in decimal percentual, in decimal gorjeta)
         {

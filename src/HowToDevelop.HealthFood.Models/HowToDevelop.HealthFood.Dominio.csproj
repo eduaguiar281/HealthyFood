@@ -8,4 +8,10 @@
     <ProjectReference Include="..\HowToDevelop.Core\HowToDevelop.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Garcons\Infraestrutura\EntityConfigurations\" />
+    <Folder Include="Pedidos\Infraestrutura\EntityConfigurations\" />
+    <Folder Include="Produtos\Infraestrutura\EntityConfigurations\" />
+  </ItemGroup>
+
 </Project>

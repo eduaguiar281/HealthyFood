@@ -28,7 +28,7 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
             GarcomId = garcomId;
             NomeCliente = nomeCliente;
             _itens = new List<ItensPedido>();
-            CalcularTotal();
+            CalcularTotalItens();
             Status = StatusPedido.Novo;
         }
 
@@ -46,9 +46,77 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
         private Desconto _desconto;
         public Desconto Desconto => _desconto;
 
+        private Comissao _comissao;
+        public Comissao Comissao => _comissao;
+
         private readonly List<ItensPedido> _itens;
 
         public IReadOnlyCollection<ItensPedido> Itens => _itens.AsReadOnly();
+
+        public Result FecharPedido(in decimal percentualComissao, 
+            in decimal gorjeta, 
+            decimal desconto, 
+            TipoDesconto tipoDesconto)
+        {
+            if (Status != StatusPedido.EmAndamento)
+            {
+                return Result.Failure(PedidosConstantes.PedidoDeveEstarEmAndamento);
+            }
+
+            var resultDesconto = AplicarDesconto(desconto, tipoDesconto);
+            if (resultDesconto.IsFailure)
+            {
+                return Result.Failure(resultDesconto.Error);
+            }
+            _desconto = resultDesconto.Value;
+
+            decimal totalPedido = _total - _desconto;
+
+            var (_, isFailure, comissao, error) = Comissao.Criar(totalPedido, percentualComissao, gorjeta);
+            if (isFailure)
+            {
+                return Result.Failure(error);
+            }
+
+            _comissao = comissao;
+            _total = new Total((_total + comissao.Gorjeta) - _desconto);
+            Status = StatusPedido.Fechado;
+            return Result.Success();
+        }
+
+        public Result CancelarPedido()
+        {
+            if (Status == StatusPedido.Cancelado)
+            {
+                return Result.Failure(PedidosConstantes.PedidoJaFoiCancelado);
+            }
+            CalcularTotalItens();
+            _desconto = null;
+            _comissao = null;
+            Status = StatusPedido.Cancelado;
+            return Result.Success();
+        }
+
+        private Result<Desconto> AplicarDesconto(decimal desconto, TipoDesconto tipoDesconto)
+        {
+            var result = tipoDesconto switch
+            {
+                TipoDesconto.Percentual => Desconto.CriarPorPercentual(desconto, _total),
+                TipoDesconto.Valor => Desconto.CriarPorValor(desconto, _total),
+                _ => Desconto.CriarPorValor(0, _total),
+            };
+            if (result.IsFailure)
+            {
+                return result;
+            }
+
+            if (result.Value.Percentual > PedidosConstantes.PercentualMaximo)
+            {
+                return Result.Failure<Desconto>(PedidosConstantes.PercentualDescontoNaoDeveUltrapassarPercentualMaximo);
+            }
+            
+            return result;
+        }
 
         public Result AdicionarItem(in int produtoId, in Quantidade quantidade, Preco preco, int id = 0)
         {
@@ -67,7 +135,7 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
             _itens.Add(item);
 
-            CalcularTotal();
+            CalcularTotalItens();
 
             AlteraStatusParaAndamento();
 
@@ -95,7 +163,7 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
                 return Result.Failure(erro);
             }
 
-            CalcularTotal();
+            CalcularTotalItens();
 
             return Result.Success();
         }
@@ -116,12 +184,12 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 
             _itens.Remove(item.Value);
 
-            CalcularTotal();
+            CalcularTotalItens();
             
             return Result.Success();
         }
 
-        private void CalcularTotal()
+        private void CalcularTotalItens()
         {
             _total = (Total)_itens.Sum(t => t.TotalItem.Valor);
         }

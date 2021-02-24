@@ -22,6 +22,9 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
         public static readonly string PedidosNomeClienteDeveTerNoMaxmimoNCaracteres = $"Nome do Cliente deve ter no máximo {PedidosTamanhoNomeCliente} caracteres!";
 
         public static readonly string PercentualDescontoNaoDeveUltrapassarPercentualMaximo = $"Percentual não pode ser superior a {PercentualMaximo:0.0}%!";
-        public const decimal PercentualMaximo = 30m;
+        public const decimal PercentualMaximo = 0.3m;
+
+        public const string PedidoDeveEstarEmAndamento = "Para fazer o fechamento o pedido deve estar em andamento!";
+        public const string PedidoJaFoiCancelado = "Pedido já foi cancelado!";
     }
 }
