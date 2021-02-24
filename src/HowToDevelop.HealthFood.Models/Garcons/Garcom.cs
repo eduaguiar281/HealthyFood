@@ -34,7 +34,7 @@ namespace HowToDevelop.HealthFood.Dominio.Garcons
 
         public Result VincularSetor(int setorId)
         {
-            var setor = SetorAtendimento.Criar(Id, setorId);
+            var setor = SetorAtendimento.Criar(setorId);
 
             var (_, isFailure, error) = Result.Combine(setor,
                 _setores.AlgumNaoDeveSer(x => x.SetorId == setorId,
