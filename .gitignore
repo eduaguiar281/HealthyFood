@@ -11,3 +11,5 @@
 /tests/HowToDevelop.Dominio.Tests/obj
 /src/HowToDevelop.HealthFood.WebApp/bin/Debug/netcoreapp3.1
 /src/HowToDevelop.HealthFood.WebApp/obj
+/bin/Debug
+/obj
