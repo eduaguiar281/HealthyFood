@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core;
+using HowToDevelop.Core.Entidade;
 using HowToDevelop.Core.Interfaces;
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
@@ -7,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.HealthFood.Dominio.Produtos
 {
-    public sealed class Produto: Entidade<int>, IRaizAgregacao
+    public sealed class Produto: RaizAgregacao<int>
     {
         [ExcludeFromCodeCoverage]
         private Produto()

@@ -1,16 +1,14 @@
 ﻿using CSharpFunctionalExtensions;
-using HowToDevelop.Core;
-using HowToDevelop.Core.Interfaces;
+using HowToDevelop.Core.Entidade;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 
 namespace HowToDevelop.HealthFood.Dominio.Setores
 {
-    public sealed class Setor: Entidade<int>, IRaizAgregacao
+    public sealed class Setor: RaizAgregacao<int>
     {
         [ExcludeFromCodeCoverage]
         private Setor()

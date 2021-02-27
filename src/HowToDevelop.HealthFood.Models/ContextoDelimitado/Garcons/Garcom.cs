@@ -1,6 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using HowToDevelop.Core;
-using HowToDevelop.Core.Interfaces;
+using HowToDevelop.Core.Entidade;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Linq;
 
 namespace HowToDevelop.HealthFood.Dominio.Garcons
 {
-    public sealed class Garcom: Entidade<int>, IRaizAgregacao
+    public sealed class Garcom: RaizAgregacao<int>
     {
         [ExcludeFromCodeCoverage]
         private Garcom()

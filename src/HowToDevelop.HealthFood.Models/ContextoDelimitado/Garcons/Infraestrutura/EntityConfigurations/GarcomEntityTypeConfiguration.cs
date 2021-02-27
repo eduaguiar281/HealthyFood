@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HowToDevelop.HealthFood.Dominio.Garcons;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Dominio.Garcons.Infraestrutura.EntityConfigurations
+namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
 {
+    [ExcludeFromCodeCoverage]
     public class GarcomEntityTypeConfiguration : IEntityTypeConfiguration<Garcom>
     {
         public void Configure(EntityTypeBuilder<Garcom> builder)

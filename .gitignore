@@ -9,3 +9,5 @@
 /src/HowToDevelop.HealthFood.Models/obj
 /tests/HowToDevelop.Dominio.Tests/bin/Debug/netcoreapp3.1
 /tests/HowToDevelop.Dominio.Tests/obj
+/src/HowToDevelop.HealthFood.WebApp/bin/Debug/netcoreapp3.1
+/src/HowToDevelop.HealthFood.WebApp/obj

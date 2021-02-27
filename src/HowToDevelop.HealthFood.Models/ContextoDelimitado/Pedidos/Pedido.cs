@@ -1,6 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using HowToDevelop.Core;
-using HowToDevelop.Core.Interfaces;
+using HowToDevelop.Core.Entidade;
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
 using HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor;
@@ -13,7 +12,7 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 {
     public enum StatusPedido { Novo, EmAndamento, Fechado, Cancelado }
 
-    public sealed class Pedido: Entidade<int>, IRaizAgregacao
+    public sealed class Pedido: RaizAgregacao<int>
     {
         [ExcludeFromCodeCoverage]
         private Pedido()

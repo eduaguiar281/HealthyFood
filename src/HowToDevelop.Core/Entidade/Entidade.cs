@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
+using HowToDevelop.Core.Comunicacao;
 using System;
-
+using System.Collections.Generic;
 
 namespace HowToDevelop.Core
 {
@@ -17,5 +18,6 @@ namespace HowToDevelop.Core
 
         public DateTime DataCriacao { get; protected set; }
         public DateTime DataAlteracao { get; protected set; }
+
     }
 }
