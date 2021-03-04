@@ -29,7 +29,6 @@ namespace HowToDevelop.HealthFood.WebApp
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
             app.UseRouting();
 
