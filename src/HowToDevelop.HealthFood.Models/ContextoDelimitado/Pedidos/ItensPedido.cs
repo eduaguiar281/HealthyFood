@@ -3,11 +3,14 @@ using HowToDevelop.Core;
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.HealthFood.Dominio.Pedidos
 {
     public sealed class ItensPedido: Entidade<int>
     {
+        [ExcludeFromCodeCoverage]
+        private ItensPedido() { }
         private ItensPedido(in int produtoId, in Quantidade quantidade, in Preco preco, int id)
             :base(id)
         {

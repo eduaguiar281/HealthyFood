@@ -3,10 +3,13 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/HowToDevelop.HealthFood.WebApp/HowToDevelop.HealthFood.WebApp.csproj", "src/HowToDevelop.HealthFood.WebApp/"]
+COPY ["src/HowToDevelop.HealthFood.Models/HowToDevelop.HealthFood.Dominio.csproj", "src/HowToDevelop.HealthFood.Models/"]
+COPY ["src/HowToDevelop.Core/HowToDevelop.Core.csproj", "src/HowToDevelop.Core/"]
 RUN dotnet restore "src/HowToDevelop.HealthFood.WebApp/HowToDevelop.HealthFood.WebApp.csproj"
 COPY . .
 WORKDIR "/src/src/HowToDevelop.HealthFood.WebApp"
