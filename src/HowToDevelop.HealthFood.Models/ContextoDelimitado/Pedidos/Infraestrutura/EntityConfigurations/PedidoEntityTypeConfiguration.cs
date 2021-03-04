@@ -56,6 +56,8 @@ namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
                     .HasColumnName("DescontoBaseCalculo");
 
                 descontoBuilder.Property(p => p.TipoDescontoPedido)
+                    .HasColumnName("DescontoTipo")
+                    .HasMaxLength(40)
                     .HasConversion(
                        v => v.ToString(),
                        v => (TipoDesconto)Enum.Parse(typeof(TipoDesconto), v));

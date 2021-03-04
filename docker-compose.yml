@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  sqlServer:
+    image: mcr.microsoft.com/mssql/server
+    container_name: healthfood_db
+    environment:
+      SA_PASSWORD: "A123456@"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+  howtodevelop.healthfood.webapp:
+    image: ${DOCKER_REGISTRY-}howtodevelophealthfoodwebapp
+    build:
+      context: .
+      dockerfile: src/HowToDevelop.HealthFood.WebApp/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIROMENT=Development
+    depends_on:
+      - sqlServer

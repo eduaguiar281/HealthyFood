@@ -8,6 +8,7 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos
 {
     public sealed class ItensPedido: Entidade<int>
     {
+        private ItensPedido() { }
         private ItensPedido(in int produtoId, in Quantidade quantidade, in Preco preco, int id)
             :base(id)
         {
