@@ -2,13 +2,18 @@
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor
 {
     public enum TipoDesconto { Percentual, Valor };
 
-    public class Desconto
+    public class Desconto : ValueObject
     {
+        [ExcludeFromCodeCoverage]
+        protected Desconto () { }
+
         private Desconto(in decimal valor, in Percentual percentual, in decimal baseCalculo, in TipoDesconto tipo)
         {
             Valor = valor;
@@ -59,6 +64,14 @@ namespace HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor
             decimal valor = (baseCalculo * percentual) / 100;
 
             return Result.Success(new Desconto(valor, percentualResult.Value, baseCalculo, TipoDesconto.Percentual));
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Percentual;
+            yield return Valor;
+            yield return BaseCalculo;
+            yield return TipoDescontoPedido;
         }
     }
 }
