@@ -13,3 +13,5 @@
 /src/HowToDevelop.HealthFood.WebApp/obj
 /bin/Debug
 /obj
+/src/HowToDevelop.HealthFood.WebApp/node_modules
+/Passo a passo aulas.txt
