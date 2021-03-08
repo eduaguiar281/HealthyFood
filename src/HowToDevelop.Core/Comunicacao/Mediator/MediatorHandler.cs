@@ -1,7 +1,6 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CSharpFunctionalExtensions;
+using HowToDevelop.Core.Comunicacao.Interfaces;
+using MediatR;
 using System.Threading.Tasks;
 
 namespace HowToDevelop.Core.Comunicacao.Mediator
@@ -13,6 +12,11 @@ namespace HowToDevelop.Core.Comunicacao.Mediator
         public MediatorHandler(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        public async Task<Result<T>> EnviarComando<T>(IComando<T> comando)
+        {
+            return await _mediator.Send(comando);
         }
 
         public async Task PublicarEvento<T>(T evento) where T : Evento

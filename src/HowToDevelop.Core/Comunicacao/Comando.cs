@@ -1,17 +1,15 @@
 ﻿using HowToDevelop.Core.Comunicacao.Interfaces;
-using MediatR;
 using System;
 
 namespace HowToDevelop.Core.Comunicacao
 {
-    public abstract class Evento: Mensagem, IEvento
+    public abstract class Comando<T>:Mensagem, IComando<T>
     {
-        public DateTime Timestamp { get; private set; }
-
-        protected Evento()
+        protected Comando()
         {
             Timestamp = DateTime.UtcNow;
         }
 
+        public DateTime Timestamp { get; protected set; }
     }
 }
