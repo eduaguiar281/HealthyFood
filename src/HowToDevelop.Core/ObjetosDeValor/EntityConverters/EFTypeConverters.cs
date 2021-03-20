@@ -17,7 +17,16 @@ namespace HowToDevelop.Core.ObjetosDeValor.EntityConverters
             quantidadeValor => new Quantidade(quantidadeValor));
 
         public static readonly ValueConverter<Total, decimal> TotalConverter = new ValueConverter<Total, decimal>(
-            quantidade => quantidade.Valor,
-            quantidadeValor => new Total(quantidadeValor));
+            total => total.Valor,
+            totalValor => new Total(totalValor));
+
+        public static readonly ValueConverter<Nome, string> NomeConverter = new ValueConverter<Nome, string>(
+            nome => nome.Valor,
+            nomeValor => Nome.Criar(nomeValor).Value);
+
+        public static readonly ValueConverter<Apelido, string> ApelidoConverter = new ValueConverter<Apelido, string>(
+            apelido => apelido.Valor,
+            apelidoValor => Apelido.Criar(apelidoValor).Value);
+
     }
 }

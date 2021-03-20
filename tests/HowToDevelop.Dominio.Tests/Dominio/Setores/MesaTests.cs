@@ -1,9 +1,9 @@
-﻿using HowToDevelop.HealthFood.Dominio.Setores;
-using HowToDevelop.HealthFood.Dominio.Tests.Builders;
+﻿using HowToDevelop.HealthFood.Setores;
+using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
 using Shouldly;
 using Xunit;
 
-namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Setores
+namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Setores
 {
     public class MesaTests
     {

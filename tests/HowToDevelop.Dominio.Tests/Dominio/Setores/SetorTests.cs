@@ -1,11 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
-using HowToDevelop.HealthFood.Dominio.Setores;
-using HowToDevelop.HealthFood.Dominio.Tests.Builders;
+using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.HealthFood.Infraestrutura.Setores;
+using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
+using HowToDevelop.HealthFood.Setores;
 using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Setores
+namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Setores
 {
     public class SetorTests
     {
@@ -37,23 +39,7 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Setores
 
             //Assert
             result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(SetoresConstantes.SetorCampoNomeObrigatorio);
-        }
-
-        [Fact(DisplayName = "Nome Acima Limite Caracteres Deve Falhar")]
-        [Trait(nameof(Setor), "Criar")]
-        public void Criar_NomeAcimeLimiteCaracteres_DeveFalhar()
-        {
-            //Arrange 
-            var builder = new SetorTestBuilder()
-                .ComNome("Setor 01".PadRight(SetoresConstantes.SetorTamanhoMaximoNome + 5));
-
-            //Act
-            var result = builder.Build();
-
-            //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(SetoresConstantes.SetorCampoNomeDeveTerAteNCaracteres);
+            result.Error.ShouldContain(NomeConstantes.NomeEhObrigatorio);
         }
 
         [Fact(DisplayName = "Sem Sigla Deve Falhar")]
@@ -72,22 +58,6 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Setores
             result.Error.ShouldContain(SetoresConstantes.SetorCampoSiglaObrigatorio);
         }
 
-        [Fact(DisplayName = "Sigla Acima Limite Caracteres Deve Falhar")]
-        [Trait(nameof(Setor), "Criar")]
-        public void Criar_SiglaAcimeLimiteCaracteres_DeveFalhar()
-        {
-            //Arrange 
-            var builder = new SetorTestBuilder()
-                .ComSigla("ST1".PadRight(SetoresConstantes.SetorTamanhoMaximoSigla + 2));
-
-            //Act
-            var result = builder.Build();
-
-            //Assert
-            result.IsFailure.ShouldBeTrue();
-            result.Error.ShouldContain(SetoresConstantes.SetorCampoSiglaDeveTerAteNCaracteres);
-        }
-
         [Fact(DisplayName = "Alterar Descricao Setor Válido Deve Ter Sucesso")]
         [Trait(nameof(Setor), nameof(Setor.AlterarDescricaoSetor))]
         public void Setor_AlterarDescricaoSetor_DeveCriarComSucesso()
@@ -102,8 +72,8 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Setores
 
             //Assert
             result.IsSuccess.ShouldBeTrue();
-            setor.Nome.ShouldBe(novoNome);
-            setor.Sigla.ShouldBe(novaSigla);
+            setor.Nome.Valor.ShouldBe(novoNome);
+            setor.Sigla.Valor.ShouldBe(novaSigla);
         }
 
         [Fact(DisplayName = "Alterar Descricao Setor Dados Inválidos Deve Falhar")]
@@ -121,8 +91,8 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Setores
             //Assert
             result.IsFailure.ShouldBeTrue();
             result.Error.ShouldContain(SetoresConstantes.SetorCampoSiglaObrigatorio);
-            setor.Nome.ShouldNotBe(novoNome);
-            setor.Sigla.ShouldNotBe(novaSigla);
+            setor.Nome.Valor.ShouldNotBe(novoNome);
+            setor.Sigla.Valor.ShouldNotBe(novaSigla);
         }
 
         [Fact(DisplayName = "Adicionar Nova Mesa Deve Ter Sucesso")]

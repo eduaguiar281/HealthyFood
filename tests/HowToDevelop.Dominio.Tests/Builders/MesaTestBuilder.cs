@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using HowToDevelop.HealthFood.Dominio.Setores;
+using HowToDevelop.HealthFood.Setores;
 
-namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
+namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
 {
     public class MesaTestBuilder: ITestBuilder<Result<Mesa>>
     {

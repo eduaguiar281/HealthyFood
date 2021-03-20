@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor
+namespace HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor
 {
     public static class DescontoConstantes
     {

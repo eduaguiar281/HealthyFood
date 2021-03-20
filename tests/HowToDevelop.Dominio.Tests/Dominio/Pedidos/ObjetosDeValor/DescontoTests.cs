@@ -1,6 +1,6 @@
 ﻿using Xunit;
 using Shouldly;
-using HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor;
 using System;
 using HowToDevelop.Core.ObjetosDeValor;
 

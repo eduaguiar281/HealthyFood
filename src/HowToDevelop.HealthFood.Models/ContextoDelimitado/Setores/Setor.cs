@@ -1,14 +1,15 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.Entidade;
+using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace HowToDevelop.HealthFood.Dominio.Setores
+namespace HowToDevelop.HealthFood.Setores
 {
-    public sealed class Setor: RaizAgregacao<int>
+    public sealed class Setor : RaizAgregacao<int>
     {
         [ExcludeFromCodeCoverage]
         private Setor()
@@ -16,8 +17,8 @@ namespace HowToDevelop.HealthFood.Dominio.Setores
             _mesas = new List<Mesa>();
         }
 
-        private Setor(in string nome, in string sigla, in int id = 0)
-            :base(id)
+        private Setor(in Nome nome, in Sigla sigla, in int id = 0)
+            : base(id)
         {
             _mesas = new List<Mesa>();
             Nome = nome;
@@ -25,26 +26,30 @@ namespace HowToDevelop.HealthFood.Dominio.Setores
         }
 
         private readonly List<Mesa> _mesas;
-       
+
         public IReadOnlyCollection<Mesa> Mesas => _mesas.AsReadOnly();
 
-        public string Nome { get; private set; }
+        public Nome Nome { get; private set; }
 
-        public string Sigla { get; private set; }
+        public Sigla Sigla { get; private set; }
 
 
         public Result AlterarDescricaoSetor(in string nome, in string sigla)
         {
-            var (_, isFailure, error) = ValidarDescricoes(nome, sigla);
+            Result<Nome> nomeResult = Nome.Criar(nome);
+            Result<Sigla> siglaResult = Sigla.Criar(sigla);
+
+            var (_, isFailure, error) = Result.Combine(
+                nomeResult, siglaResult,
+                sigla.NaoDeveSerNuloOuVazio(SetoresConstantes.SetorCampoSiglaObrigatorio));
 
             if (isFailure)
             {
                 return Result.Failure(error);
             }
 
-            Nome = nome;
-            Sigla = sigla;
-
+            Nome = nomeResult.Value;
+            Sigla = siglaResult.Value;
             return Result.Success();
         }
 
@@ -81,24 +86,21 @@ namespace HowToDevelop.HealthFood.Dominio.Setores
 
         }
 
-        private static Result ValidarDescricoes(in string nome, in string sigla)
-        {
-            return Result.Combine(nome.NaoDeveSerNuloOuVazio(SetoresConstantes.SetorCampoNomeObrigatorio),
-                nome.TamanhoMenorOuIgual(SetoresConstantes.SetorTamanhoMaximoNome, SetoresConstantes.SetorCampoNomeDeveTerAteNCaracteres),
-                sigla.NaoDeveSerNuloOuVazio(SetoresConstantes.SetorCampoSiglaObrigatorio),
-                sigla.TamanhoMenorOuIgual(SetoresConstantes.SetorTamanhoMaximoSigla, SetoresConstantes.SetorCampoSiglaDeveTerAteNCaracteres));
-        }
-
         public static Result<Setor> Criar(in string nome, in string sigla, in int id = 0)
         {
-            var (_, isFailure, error) =  ValidarDescricoes(nome, sigla);
+            Result<Nome> nomeResult = Nome.Criar(nome);
+            Result<Sigla> siglaResult = Sigla.Criar(sigla);
+
+            var (_, isFailure, error) = Result.Combine(nomeResult, 
+                siglaResult, 
+                sigla.NaoDeveSerNuloOuVazio(SetoresConstantes.SetorCampoSiglaObrigatorio));
 
             if (isFailure)
             {
                 return Result.Failure<Setor>(error);
             }
 
-            return Result.Success(new Setor(nome, sigla, id));
+            return Result.Success(new Setor(nomeResult.Value, siglaResult.Value, id));
         }
     }
 }

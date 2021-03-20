@@ -2,13 +2,13 @@
 using HowToDevelop.Core.Entidade;
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
-using HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace HowToDevelop.HealthFood.Dominio.Pedidos
+namespace HowToDevelop.HealthFood.Infraestrutura.Pedidos
 {
     public enum StatusPedido { Novo, EmAndamento, Fechado, Cancelado }
 

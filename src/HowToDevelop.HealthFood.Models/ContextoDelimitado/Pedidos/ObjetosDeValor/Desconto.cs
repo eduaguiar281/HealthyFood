@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor
+namespace HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor
 {
     public enum TipoDesconto { Percentual, Valor };
 

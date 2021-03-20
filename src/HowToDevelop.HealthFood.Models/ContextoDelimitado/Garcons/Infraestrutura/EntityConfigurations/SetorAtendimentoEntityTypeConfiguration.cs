@@ -1,10 +1,10 @@
-﻿using HowToDevelop.HealthFood.Dominio.Garcons;
-using HowToDevelop.HealthFood.Dominio.Setores;
+﻿using HowToDevelop.HealthFood.Infraestrutura.Garcons;
+using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
+namespace HowToDevelop.HealthFood.Infraestrutura.Setores
 {
     [ExcludeFromCodeCoverage]
     public class SetorAtendimentoEntityTypeConfiguration : IEntityTypeConfiguration<SetorAtendimento>

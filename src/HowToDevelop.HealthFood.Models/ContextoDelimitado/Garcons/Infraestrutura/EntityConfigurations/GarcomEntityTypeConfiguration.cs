@@ -1,9 +1,10 @@
-﻿using HowToDevelop.HealthFood.Dominio.Garcons;
+﻿using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
+namespace HowToDevelop.HealthFood.Infraestrutura.Setores
 {
     [ExcludeFromCodeCoverage]
     public class GarcomEntityTypeConfiguration : IEntityTypeConfiguration<Garcom>
@@ -14,10 +15,10 @@ namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
             builder.HasKey(s => s.Id);
 
             builder.Property(p => p.Nome)
-                .HasMaxLength(GarconsConstantes.GarcomTamanhoMaximoNome);
+                .HasMaxLength(NomeConstantes.NomeTamanhoMaximoPadrao);
             
             builder.Property(p => p.Apelido)
-                .HasMaxLength(GarconsConstantes.GarcomTamanhoMaximoApelido);
+                .HasMaxLength(ApelidoConstantes.ApelidoTamanhoMaximoPadrao);
 
             builder.HasMany(s => s.SetoresAtendimento)
                .WithOne()

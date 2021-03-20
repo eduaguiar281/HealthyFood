@@ -1,10 +1,12 @@
 ﻿using HowToDevelop.Core.Comunicacao.Mediator;
 using HowToDevelop.Core.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
+namespace HowToDevelop.HealthFood.Infraestrutura
 {
+    [ExcludeFromCodeCoverage]
     public static class MediatorExtension
     {
         public static async Task PublicarEventos(this IMediatorHandler mediator, HealthFoodDbContext context)

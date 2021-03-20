@@ -1,9 +1,9 @@
-﻿using HowToDevelop.HealthFood.Dominio.Setores;
+﻿using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
+namespace HowToDevelop.HealthFood.Infraestrutura.Setores
 {
     [ExcludeFromCodeCoverage]
     public class MesaEntityTypeConfiguration : IEntityTypeConfiguration<Mesa>

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor
+namespace HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor
 {
     public class Comissao : ValueObject
     {

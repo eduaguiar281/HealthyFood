@@ -1,9 +1,10 @@
-﻿using HowToDevelop.HealthFood.Dominio.Setores;
+﻿using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
+namespace HowToDevelop.HealthFood.Infraestrutura.Setores
 {
     [ExcludeFromCodeCoverage]
     public class SetorEntityTypeConfiguration : IEntityTypeConfiguration<Setor>
@@ -14,10 +15,10 @@ namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
             builder.HasKey(s => s.Id);
 
             builder.Property(p => p.Nome)
-                .HasMaxLength(SetoresConstantes.SetorTamanhoMaximoNome);
+                .HasMaxLength(NomeConstantes.NomeTamanhoMaximoPadrao);
 
             builder.Property(p => p.Sigla)
-                .HasMaxLength(SetoresConstantes.SetorTamanhoMaximoSigla);
+                .HasMaxLength(SiglaConstantes.SiglaTamanhoMaximoPadrao);
 
             builder.HasMany(s => s.Mesas)
                .WithOne()

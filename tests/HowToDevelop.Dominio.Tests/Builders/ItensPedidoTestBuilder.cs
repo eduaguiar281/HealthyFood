@@ -1,11 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
-using HowToDevelop.HealthFood.Dominio.Pedidos;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
+namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
 {
     public class ItensPedidoTestBuilder: ITestBuilder<Result<ItensPedido>>
     {

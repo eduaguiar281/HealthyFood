@@ -1,5 +1,5 @@
 ﻿using HowToDevelop.Core.ObjetosDeValor;
-using HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor;
 using Shouldly;
 using System;
 using Xunit;

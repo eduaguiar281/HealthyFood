@@ -4,11 +4,11 @@ using System.Text;
 using Shouldly;
 using CSharpFunctionalExtensions;
 using Xunit;
-using HowToDevelop.HealthFood.Dominio.Produtos;
-using HowToDevelop.HealthFood.Dominio.Tests.Builders;
+using HowToDevelop.HealthFood.Infraestrutura.Produtos;
+using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
 using HowToDevelop.Core.ObjetosDeValor;
 
-namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Produtos
+namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Produtos
 {
     public class ProdutoTests
     {

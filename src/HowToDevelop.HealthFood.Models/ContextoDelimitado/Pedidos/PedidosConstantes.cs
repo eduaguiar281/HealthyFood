@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HowToDevelop.HealthFood.Dominio.Pedidos
+namespace HowToDevelop.HealthFood.Infraestrutura.Pedidos
 {
     public static class PedidosConstantes
     {

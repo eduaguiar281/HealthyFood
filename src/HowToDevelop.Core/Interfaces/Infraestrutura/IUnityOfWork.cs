@@ -6,6 +6,6 @@ namespace HowToDevelop.Core.Interfaces.Infraestrutura
 {
     public interface IUnitOfWork : IDisposable
     {
-        Task<int> Commit(CancellationToken cancellationToken = default);
+        Task<int> CommitAsync(CancellationToken cancellationToken = default);
     }
 }

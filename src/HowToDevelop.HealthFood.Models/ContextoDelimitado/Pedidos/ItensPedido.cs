@@ -5,7 +5,7 @@ using HowToDevelop.Core.ValidacoesPadrao;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Dominio.Pedidos
+namespace HowToDevelop.HealthFood.Infraestrutura.Pedidos
 {
     public sealed class ItensPedido: Entidade<int>
     {

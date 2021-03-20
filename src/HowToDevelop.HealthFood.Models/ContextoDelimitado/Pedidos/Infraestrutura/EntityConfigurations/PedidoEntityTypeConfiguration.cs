@@ -1,16 +1,14 @@
 ﻿using HowToDevelop.Core.ObjetosDeValor.EntityConverters;
-using HowToDevelop.HealthFood.Dominio.Garcons;
-using HowToDevelop.HealthFood.Dominio.Pedidos;
-using HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor;
-using HowToDevelop.HealthFood.Dominio.Setores;
+using HowToDevelop.HealthFood.Infraestrutura.Garcons;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor;
+using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
-namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
+namespace HowToDevelop.HealthFood.Infraestrutura.Setores
 {
     [ExcludeFromCodeCoverage]
     public class PedidoEntityTypeConfiguration : IEntityTypeConfiguration<Pedido>

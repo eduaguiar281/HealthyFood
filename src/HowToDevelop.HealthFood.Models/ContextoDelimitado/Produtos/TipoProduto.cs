@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HowToDevelop.HealthFood.Dominio.Produtos
+namespace HowToDevelop.HealthFood.Infraestrutura.Produtos
 {
     public enum TipoProduto
     {

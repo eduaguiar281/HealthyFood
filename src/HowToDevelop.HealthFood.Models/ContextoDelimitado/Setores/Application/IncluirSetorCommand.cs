@@ -1,9 +1,6 @@
 ﻿using HowToDevelop.Core.Comunicacao;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace HowToDevelop.HealthFood.Dominio.ContextoDelimitado.Setores.Application
+namespace HowToDevelop.HealthFood.Application.Setores
 {
     public class IncluirSetorCommand :Comando<SetorDto>
     {

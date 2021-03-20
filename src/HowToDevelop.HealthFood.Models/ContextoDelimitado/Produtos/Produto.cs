@@ -6,7 +6,7 @@ using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Dominio.Produtos
+namespace HowToDevelop.HealthFood.Infraestrutura.Produtos
 {
     public sealed class Produto: RaizAgregacao<int>
     {

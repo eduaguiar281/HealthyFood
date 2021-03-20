@@ -2,11 +2,9 @@
 using HowToDevelop.Core;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
-namespace HowToDevelop.HealthFood.Dominio.Setores
+namespace HowToDevelop.HealthFood.Setores
 {
     public sealed class Mesa: Entidade<int>
     {

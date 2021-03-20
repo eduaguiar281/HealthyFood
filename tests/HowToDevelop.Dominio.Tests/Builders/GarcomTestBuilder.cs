@@ -1,7 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using HowToDevelop.HealthFood.Dominio.Garcons;
+using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 
-namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
+namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
 {
     public class GarcomTestBuilder: ITestBuilder<Result<Garcom>>
     {
@@ -9,16 +10,16 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
         {
             Reiniciar();
         }
-        public string Nome { get; private set; }
-        public string Apelido { get; private set; }
+        public Nome Nome { get; private set; }
+        public Apelido Apelido { get; private set; }
 
-        public GarcomTestBuilder ComNome(string nome)
+        public GarcomTestBuilder ComNome(Nome nome)
         {
             Nome = nome;
             return this;
         }
 
-        public GarcomTestBuilder ComApelido(string apelido)
+        public GarcomTestBuilder ComApelido(Apelido apelido)
         {
             Apelido = apelido;
             return this;
@@ -31,8 +32,8 @@ namespace HowToDevelop.HealthFood.Dominio.Tests.Builders
 
         public void Reiniciar()
         {
-            Nome = "José da Silva";
-            Apelido = "Garçom";
+            Nome = Nome.Criar("José da Silva").Value;
+            Apelido = Apelido.Criar("Garçom").Value;
         }
     }
 }

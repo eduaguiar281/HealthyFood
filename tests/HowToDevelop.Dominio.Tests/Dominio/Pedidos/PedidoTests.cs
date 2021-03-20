@@ -1,13 +1,13 @@
-﻿using HowToDevelop.HealthFood.Dominio.Pedidos;
-using HowToDevelop.HealthFood.Dominio.Tests.Builders;
+﻿using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
+using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
 using Shouldly;
 using CSharpFunctionalExtensions;
 using Xunit;
 using HowToDevelop.Core.ObjetosDeValor;
-using HowToDevelop.HealthFood.Dominio.Pedidos.ObjetosDeValor;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor;
 using System;
 
-namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Pedidos
+namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Pedidos
 {
     public class PedidoTests
     {

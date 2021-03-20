@@ -1,4 +1,4 @@
-using HowToDevelop.HealthFood.Dominio.Infraestrutura;
+using HowToDevelop.HealthFood.Infraestrutura;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

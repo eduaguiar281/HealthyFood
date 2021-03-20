@@ -1,12 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.Entidade;
+using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace HowToDevelop.HealthFood.Dominio.Garcons
+namespace HowToDevelop.HealthFood.Infraestrutura.Garcons
 {
     public sealed class Garcom: RaizAgregacao<int>
     {
@@ -16,7 +17,7 @@ namespace HowToDevelop.HealthFood.Dominio.Garcons
             _setores = new List<SetorAtendimento>();
         }
 
-        private Garcom(in string nome, in string apelido, in int id)
+        private Garcom(in Nome nome, in Apelido apelido, in int id)
             :base(id)
         {
             _setores = new List<SetorAtendimento>();
@@ -24,9 +25,9 @@ namespace HowToDevelop.HealthFood.Dominio.Garcons
             Apelido = apelido;
         }
 
-        public string Nome { get; private set; }
+        public Nome Nome { get; private set; }
 
-        public string Apelido { get; private set; }
+        public Apelido Apelido { get; private set; }
 
         private readonly List<SetorAtendimento> _setores;
         public IReadOnlyCollection<SetorAtendimento> SetoresAtendimento => _setores.AsReadOnly();
@@ -69,34 +70,34 @@ namespace HowToDevelop.HealthFood.Dominio.Garcons
 
         public Result AlterarDadosPessoais(in string nome, in string apelido)
         {
-            var (_, isFailure, error) = ValidarDadosPessoais(nome, apelido);
+            Result<Nome> nomeResult = Nome.Criar(nome);
+            Result<Apelido> apelidoResult = Apelido.Criar(apelido);
 
-            if (isFailure)
-            {
-                return Result.Failure(error);
-            }
-            Nome = nome;
-            Apelido = apelido;
-            return Result.Success();
-        }
-
-        private static Result ValidarDadosPessoais(in string nome, in string apelido)
-        {
-            return Result.Combine(nome.NaoDeveSerNuloOuVazio(GarconsConstantes.GarcomNomeEhObrigatorio),
-                nome.TamanhoMenorOuIgual(GarconsConstantes.GarcomTamanhoMaximoNome, GarconsConstantes.NomeDeveTerAteCaracteres),
-                apelido.TamanhoMenorOuIgual(GarconsConstantes.GarcomTamanhoMaximoApelido, GarconsConstantes.ApelidoDeveTerAteCaracteres));
-        }
-
-        public static Result<Garcom> Criar(in string nome, in string apelido, in int id = 0)
-        {
-            var (_, isFailure, error) = ValidarDadosPessoais(nome, apelido);
+            var (_, isFailure, error) = Result.Combine(nomeResult, apelidoResult);
 
             if (isFailure)
             {
                 return Result.Failure<Garcom>(error);
             }
 
-            return Result.Success(new Garcom(nome, apelido, id));
+            Nome = nomeResult.Value;
+            Apelido = apelidoResult.Value;
+            return Result.Success();
+        }
+
+        public static Result<Garcom> Criar(in string nome, in string apelido, in int id = 0)
+        {
+            Result<Nome> nomeResult = Nome.Criar(nome);
+            Result<Apelido> apelidoResult = Apelido.Criar(apelido);
+
+            var (_, isFailure, error) = Result.Combine(nomeResult, apelidoResult);
+
+            if (isFailure)
+            {
+                return Result.Failure<Garcom>(error);
+            }
+
+            return Result.Success(new Garcom(nomeResult.Value, apelidoResult.Value, id));
         }
     }
 }

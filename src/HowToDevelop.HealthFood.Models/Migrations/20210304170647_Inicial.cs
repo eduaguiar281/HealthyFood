@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HowToDevelop.HealthFood.Dominio.Migrations
+namespace HowToDevelop.HealthFood.Infraestrutura.Migrations
 {
     public partial class Inicial : Migration
     {

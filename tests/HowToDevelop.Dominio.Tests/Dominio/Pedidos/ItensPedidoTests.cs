@@ -1,11 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
-using HowToDevelop.HealthFood.Dominio.Pedidos;
-using HowToDevelop.HealthFood.Dominio.Tests.Builders;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
+using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
 using Shouldly;
 using Xunit;
 
-namespace HowToDevelop.HealthFood.Dominio.Tests.Dominio.Pedidos
+namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Pedidos
 {
     public class ItensPedidoTests
     {

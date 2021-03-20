@@ -1,25 +1,27 @@
-﻿using HowToDevelop.Core;
-using HowToDevelop.Core.Comunicacao;
+﻿using HowToDevelop.Core.Comunicacao;
 using HowToDevelop.Core.Comunicacao.Mediator;
 using HowToDevelop.Core.Interfaces.Infraestrutura;
-using HowToDevelop.HealthFood.Dominio.Garcons;
-using HowToDevelop.HealthFood.Dominio.Pedidos;
-using HowToDevelop.HealthFood.Dominio.Produtos;
-using HowToDevelop.HealthFood.Dominio.Setores;
+using HowToDevelop.HealthFood.Infraestrutura.Garcons;
+using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
+using HowToDevelop.HealthFood.Infraestrutura.Produtos;
+using HowToDevelop.HealthFood.Infraestrutura.Setores;
+using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
+namespace HowToDevelop.HealthFood.Infraestrutura
 {
-    public class HealthFoodDbContext: DbContext, IUnitOfWork
+    [ExcludeFromCodeCoverage]
+    public class HealthFoodDbContext : DbContext, IUnitOfWork
     {
         private readonly IMediatorHandler _mediatorHandler;
 
-        public HealthFoodDbContext(DbContextOptions<HealthFoodDbContext> options, 
-            IMediatorHandler mediatorHandler) 
+        public HealthFoodDbContext(DbContextOptions<HealthFoodDbContext> options,
+            IMediatorHandler mediatorHandler)
             : base(options)
         {
             _mediatorHandler = mediatorHandler;
@@ -28,7 +30,7 @@ namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
         public DbSet<Garcom> Garcons { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
-        public DbSet<Setor> Setores { get; set; } 
+        public DbSet<Setor> Setores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +39,7 @@ namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
 
             modelBuilder.ApplyConfiguration(new PedidoEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ItensPedidoEntityTypeConfiguration());
-            
+
             modelBuilder.ApplyConfiguration(new ProdutoEntityTypeConfiguration());
 
 
@@ -49,11 +51,11 @@ namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            return await Commit(cancellationToken) > 0;
+            return await CommitAsync(cancellationToken) > 0;
         }
 
 
-        public async Task<int> Commit(CancellationToken cancellationToken = default)
+        public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCriacao") != null))
             {
@@ -78,6 +80,5 @@ namespace HowToDevelop.HealthFood.Dominio.Infraestrutura
 
             return result;
         }
-
     }
 }
