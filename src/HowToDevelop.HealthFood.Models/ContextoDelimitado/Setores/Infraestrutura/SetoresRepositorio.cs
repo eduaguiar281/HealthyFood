@@ -1,8 +1,10 @@
-﻿using HowToDevelop.Core.Interfaces.Infraestrutura;
+﻿using CSharpFunctionalExtensions;
+using HowToDevelop.Core.Interfaces.Infraestrutura;
 using HowToDevelop.HealthFood.Infraestrutura;
 using HowToDevelop.HealthFood.Infraestrutura.Setores;
 using HowToDevelop.HealthFood.Setores;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace HowToDevelop.HealthFood.Dominio.ContextoDelimitado.Setores.Infraestrutura
 {
@@ -30,6 +32,16 @@ namespace HowToDevelop.HealthFood.Dominio.ContextoDelimitado.Setores.Infraestrut
         public void Remover(Setor data)
         {
             _context.Setores.Remove(data);
+        }
+
+        public async Task<Maybe<Setor>> ObterPorIdAsync(int id)
+        {
+            return await _context.Setores.FindAsync(id);
+        }
+
+        public async Task<Maybe<Setor>> ObterComMesasPorIdAsync(int id)
+        {
+            return await _context.Setores.Include(s=> s.Mesas).FirstOrDefaultAsync(s=> s.Id == id);
         }
     }
 }

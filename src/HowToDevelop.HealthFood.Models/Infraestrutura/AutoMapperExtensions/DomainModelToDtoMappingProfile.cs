@@ -9,6 +9,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.AutoMapperExtensions
         public DomainModelToDtoMappingProfile()
         {
             CreateMap<Setor, SetorDto>();
+            CreateMap<Mesa, MesaDto>();
         }
     }
 }

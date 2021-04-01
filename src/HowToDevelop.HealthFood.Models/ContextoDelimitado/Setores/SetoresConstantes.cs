@@ -14,5 +14,10 @@ namespace HowToDevelop.HealthFood.Setores
 
         public const string NaoFoiPossivelSalvarSetor = "Não foi possível salvar o setor informado!";
 
+        public const string NaoFoiRemoverMesaSetor = "Não foi possível remover mesa do setor informado!";
+
+        public const string NaoFoiAdicionarMesaSetor = "Não foi possível adicionar mesa do setor informado!";
+
+        public const string NaoFoiEncontrarSetorInformado = "O setor {0} informado não foi encontrado!";
     }
 }

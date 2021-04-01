@@ -14,7 +14,7 @@ namespace HowToDevelop.Core.Comunicacao.Mediator
             _mediator = mediator;
         }
 
-        public async Task<Result<T>> EnviarComando<T>(IComando<T> comando)
+        public async Task<Result<T>> EnviarComando<T>(ICommand<T> comando)
         {
             return await _mediator.Send(comando);
         }

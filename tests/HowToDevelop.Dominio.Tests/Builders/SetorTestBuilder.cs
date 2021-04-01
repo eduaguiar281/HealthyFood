@@ -14,7 +14,9 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
         {
             Nome = "Setor 01";
             Sigla = "ST1";
+            Id = 1;
         }
+        public int Id { get; protected set; }
 
         public string Nome { get; protected set; }
         public string Sigla { get; protected set; }
@@ -29,10 +31,15 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
             Sigla = sigla;
             return this;
         }
+        public SetorTestBuilder ComId(int id)
+        {
+            Id = id;
+            return this;
+        }
 
         public Result<Setor> Build()
         {
-            return Setor.Criar(Nome, Sigla);
+            return Setor.Criar(Nome, Sigla, Id);
         }
     }
 }

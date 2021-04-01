@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.Core.ObjetosDeValor.EntityConverters
 {
+    [ExcludeFromCodeCoverage]
     public static class EFTypeConverters
     {
         public static readonly ValueConverter<Percentual, decimal> PercentualConverter = new ValueConverter<Percentual, decimal>(

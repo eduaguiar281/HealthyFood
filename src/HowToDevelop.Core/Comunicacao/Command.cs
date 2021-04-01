@@ -3,9 +3,9 @@ using System;
 
 namespace HowToDevelop.Core.Comunicacao
 {
-    public abstract class Comando<T>:Mensagem, IComando<T>
+    public abstract class Command<T>:Mensagem, ICommand<T>
     {
-        protected Comando()
+        protected Command()
         {
             Timestamp = DateTime.UtcNow;
         }

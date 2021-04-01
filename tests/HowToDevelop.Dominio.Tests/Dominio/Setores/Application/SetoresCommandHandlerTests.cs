@@ -2,6 +2,7 @@
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.HealthFood.Application.Setores;
 using HowToDevelop.HealthFood.Infraestrutura.Setores;
+using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
 using HowToDevelop.HealthFood.Setores;
 using Moq;
 using Shouldly;
@@ -83,5 +84,33 @@ namespace HowToDevelop.Dominio.Tests.Dominio.Setores.Application
             _fixture.Repositorio.Verify(r => r.Adicionar(It.IsAny<Setor>()), Times.Once);
             _fixture.UnitOfWork.Verify(r => r.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
+
+        [Fact(DisplayName = "Alterar Descrição Setor Comando Válido Deve Ter Sucesso")]
+        [Trait(nameof(AlterarDescricaoSetorCommand), nameof(SetoresCommandHandler.Handle))]
+        public async Task AlterarDescricaoSetorCommand_ComandoValido_DeveTerSucesso()
+        {
+            // Arrange
+            Setor setor = new SetorTestBuilder().Build().Value;
+            var command = new AlterarDescricaoSetorCommand(setor.Id, "Área VIP", "V01");
+
+            _fixture.RepositorioReset()
+                .UnitOfWork.Setup(s => s.CommitAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(1));
+
+            _fixture.Repositorio.Setup(s => s.ObterPorIdAsync(setor.Id))
+                .Returns(Task.FromResult<Maybe<Setor>>(setor));
+
+            // Act
+            Result<SetorDto> result = await _fixture.CommandHandler.Handle(command, CancellationToken.None);
+
+            // Assert
+            result.IsSuccess.ShouldBeTrue();
+            _fixture.Repositorio.Verify(r => r.Atualizar(setor), Times.Once);
+            _fixture.UnitOfWork.Verify(r => r.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
+            result.Value.Nome.ShouldBe(command.Nome);
+            result.Value.Sigla.ShouldBe(command.Sigla);
+
+        }
+
     }
 }
