@@ -73,7 +73,6 @@ namespace HowToDevelop.Dominio.Tests.Dominio.Setores.Application
         {
             // Arrange
             var query = new ObterSetorPorIdQuery(1);
-
             _fixture.RepositorioReset()
                 .Repositorio.Setup(s => s.ObterComMesasPorIdAsync(query.Id))
                 .Returns(Task.FromResult<Maybe<Setor>>(null));
