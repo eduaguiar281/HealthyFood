@@ -16,7 +16,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Setores
 
             builder.Property(p => p.SetorId);
 
-            builder.HasOne<Setor>()
+            builder.HasOne<HealthFood.Setores.Setor>()
                .WithMany()
                .HasForeignKey(fk=> fk.SetorId);
         }

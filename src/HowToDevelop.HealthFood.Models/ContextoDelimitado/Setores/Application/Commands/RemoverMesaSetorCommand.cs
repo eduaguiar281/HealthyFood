@@ -1,7 +1,8 @@
 ﻿using HowToDevelop.Core.Comunicacao;
+using HowToDevelop.HealthFood.Setores.Application.Dtos;
 using System.Collections.Generic;
 
-namespace HowToDevelop.HealthFood.Application.Setores
+namespace HowToDevelop.HealthFood.Setores.Application.Commands
 {
     public class RemoverMesaSetorCommand : Command<IEnumerable<MesaDto>>
     {

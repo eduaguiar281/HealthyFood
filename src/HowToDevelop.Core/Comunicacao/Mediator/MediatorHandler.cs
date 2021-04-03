@@ -19,6 +19,11 @@ namespace HowToDevelop.Core.Comunicacao.Mediator
             return await _mediator.Send(comando);
         }
 
+        public async Task<Result<T>> EnviarQuery<T>(IQuery<T> query)
+        {
+            return await _mediator.Send(query);
+        }
+
         public async Task PublicarEvento<T>(T evento) where T : Evento
         {
             await _mediator.Publish(evento);

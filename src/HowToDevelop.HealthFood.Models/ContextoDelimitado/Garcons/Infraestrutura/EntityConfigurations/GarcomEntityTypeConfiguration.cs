@@ -1,4 +1,5 @@
 ﻿using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.Core.ObjetosDeValor.EntityConverters;
 using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,9 +16,11 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Setores
             builder.HasKey(s => s.Id);
 
             builder.Property(p => p.Nome)
+                .HasConversion(EFTypeConverters.NomeConverter)
                 .HasMaxLength(NomeConstantes.NomeTamanhoMaximoPadrao);
             
             builder.Property(p => p.Apelido)
+                .HasConversion(EFTypeConverters.ApelidoConverter)
                 .HasMaxLength(ApelidoConstantes.ApelidoTamanhoMaximoPadrao);
 
             builder.HasMany(s => s.SetoresAtendimento)

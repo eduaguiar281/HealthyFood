@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using HowToDevelop.HealthFood.Application.Setores;
 using HowToDevelop.HealthFood.Setores;
+using HowToDevelop.HealthFood.Setores.Application.Dtos;
 
 namespace HowToDevelop.HealthFood.Infraestrutura.AutoMapperExtensions
 {

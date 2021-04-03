@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Migrations
+namespace HowToDevelop.HealthFood.Dominio.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    Apelido = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Apelido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -47,8 +47,8 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Sigla = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: true),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Sigla = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

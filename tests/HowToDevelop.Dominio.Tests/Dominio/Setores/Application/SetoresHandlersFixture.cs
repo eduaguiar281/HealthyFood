@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HowToDevelop.Core.Interfaces.Infraestrutura;
-using HowToDevelop.HealthFood.Application.Setores;
+using HowToDevelop.HealthFood.Setores.Application.Commands;
 using HowToDevelop.HealthFood.Infraestrutura.AutoMapperExtensions;
 using HowToDevelop.HealthFood.Infraestrutura.Setores;
 using Moq;
@@ -8,24 +8,27 @@ using Moq.Language.Flow;
 using System;
 using System.Linq.Expressions;
 using Xunit;
+using HowToDevelop.HealthFood.Setores.Application.Queries;
 
 namespace HowToDevelop.Dominio.Tests.Dominio.Setores.Application
 {
-    [CollectionDefinition(nameof(SetoresCommandHandlerFixtureCollection))]
-    public class SetoresCommandHandlerFixtureCollection : ICollectionFixture<SetoresCommandHandlerFixture> { }
+    [CollectionDefinition(nameof(SetoresHandlersFixtureCollection))]
+    public class SetoresHandlersFixtureCollection : ICollectionFixture<SetoresHandlersFixture> { }
 
-    public class SetoresCommandHandlerFixture
+    public class SetoresHandlersFixture
     {
         private readonly Mock<IUnitOfWork> _uow;
         private readonly Mock<ISetoresRepositorio> _repositorio;
         private readonly SetoresCommandHandler _commandHandler;
+        private readonly SetoresQueryHandler _queryHandler;
 
-        public SetoresCommandHandlerFixture()
+        public SetoresHandlersFixture()
         {
             _repositorio = new Mock<ISetoresRepositorio>();
             _uow = new Mock<IUnitOfWork>();
             _repositorio.SetupGet(r => r.UnitOfWork).Returns(_uow.Object);
             _commandHandler = new SetoresCommandHandler(_repositorio.Object);
+            _queryHandler = new SetoresQueryHandler(_repositorio.Object);
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile(new DomainModelToDtoMappingProfile()));
             AutoMapperConfiguration.Init(config);
@@ -34,8 +37,9 @@ namespace HowToDevelop.Dominio.Tests.Dominio.Setores.Application
         public Mock<ISetoresRepositorio> Repositorio => _repositorio;
         public Mock<IUnitOfWork> UnitOfWork => _uow;
         public SetoresCommandHandler CommandHandler => _commandHandler;
+        public SetoresQueryHandler QueryHandler => _queryHandler;
 
-        public SetoresCommandHandlerFixture RepositorioReset()
+        public SetoresHandlersFixture RepositorioReset()
         {
             _uow.Reset();
             _repositorio.Reset();

@@ -1,6 +1,7 @@
 ﻿using HowToDevelop.Core.Comunicacao;
+using HowToDevelop.HealthFood.Setores.Application.Dtos;
 
-namespace HowToDevelop.HealthFood.Application.Setores
+namespace HowToDevelop.HealthFood.Setores.Application.Commands
 {
     public class IncluirSetorCommand : Command<SetorDto>
     {

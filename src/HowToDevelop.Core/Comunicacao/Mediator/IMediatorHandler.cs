@@ -8,6 +8,8 @@ namespace HowToDevelop.Core.Comunicacao.Mediator
     {
         Task PublicarEvento<T>(T evento) where T : Evento;
 
-        Task<Result<T>> EnviarComando<T>(ICommand<T> comando);  
+        Task<Result<T>> EnviarComando<T>(ICommand<T> comando);
+
+        Task<Result<T>> EnviarQuery<T>(IQuery<T> query);
     }
 }

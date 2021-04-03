@@ -30,5 +30,8 @@ namespace HowToDevelop.Core.ObjetosDeValor.EntityConverters
             apelido => apelido.Valor,
             apelidoValor => Apelido.Criar(apelidoValor).Value);
 
+        public static readonly ValueConverter<Sigla, string> SiglaConverter = new ValueConverter<Sigla, string>(
+            sigla => sigla.Valor,
+            siglaValor => Sigla.Criar(siglaValor).Value);
     }
 }

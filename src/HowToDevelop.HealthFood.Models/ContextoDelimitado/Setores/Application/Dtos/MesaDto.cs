@@ -1,4 +1,4 @@
-﻿namespace HowToDevelop.HealthFood.Application.Setores
+﻿namespace HowToDevelop.HealthFood.Setores.Application.Dtos
 {
     public class MesaDto
     {

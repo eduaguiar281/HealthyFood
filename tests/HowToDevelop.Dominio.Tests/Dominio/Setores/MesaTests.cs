@@ -24,7 +24,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Setores
         }
 
         [Fact(DisplayName = "Numeracao Igual a Zero Falhar")]
-        [Trait(nameof(Setor), "Validar")]
+        [Trait(nameof(HealthFood.Setores.Setor), "Validar")]
         public void Validar_NumeracaoIgualAZero_DeveFalhar()
         {
             //Arrange 

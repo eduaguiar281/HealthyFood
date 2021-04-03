@@ -1,6 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
-using HowToDevelop.HealthFood.Infraestrutura.Setores;
 using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
 using HowToDevelop.HealthFood.Setores;
 using Shouldly;
@@ -100,7 +99,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Setores
         public void AdicionarMesa_MesaNova_DeveAdicionarComSucesso()
         {
             //Arrange 
-            Setor setor = new SetorTestBuilder().Build().Value;
+            HealthFood.Setores.Setor setor = new SetorTestBuilder().Build().Value;
             setor.AdicionarMesa(1);
             setor.AdicionarMesa(2);
 
@@ -136,7 +135,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Setores
         public void Setor_RemoverMesa_DeveRemoverComSucesso()
         {
             //Arrange 
-            Setor setor = new SetorTestBuilder().Build().Value;
+            HealthFood.Setores.Setor setor = new SetorTestBuilder().Build().Value;
             setor.AdicionarMesa(1);
             setor.AdicionarMesa(2);
 

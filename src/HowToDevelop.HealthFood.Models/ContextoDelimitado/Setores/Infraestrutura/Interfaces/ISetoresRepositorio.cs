@@ -1,7 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.Interfaces.Infraestrutura;
 using HowToDevelop.HealthFood.Setores;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using HowToDevelop.HealthFood.Setores.Application.Dtos;
 
 namespace HowToDevelop.HealthFood.Infraestrutura.Setores
 {
@@ -10,5 +12,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Setores
         Task<Maybe<Setor>> ObterPorIdAsync(int id);
 
         Task<Maybe<Setor>> ObterComMesasPorIdAsync(int id);
+
+        Task<IEnumerable<SetorInfoDto>> ObterTodosSetorInfoAsync();
     }
 }
