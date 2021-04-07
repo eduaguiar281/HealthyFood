@@ -55,7 +55,7 @@ namespace HowToDevelop.HealthFood.Setores
 
         public Result AdicionarMesa(ushort numero)
         {
-            var mesa = Mesa.Criar(numero, 1);
+            var mesa = Mesa.Criar(numero);
 
             var (_, isFailure, error) = Result.Combine(mesa,
                 _mesas.AlgumNaoDeveSer(x => x.Numeracao == numero, string.Format(SetoresConstantes.JaExisteUmaMesaComEstaNumeracaoParaSetor, Id)));

@@ -30,7 +30,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura
         public DbSet<Garcom> Garcons { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
-        public DbSet<HealthFood.Setores.Setor> Setores { get; set; }
+        public DbSet<Setor> Setores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
