@@ -10,6 +10,8 @@ using Shouldly;
 using HowToDevelop.Core.ObjetosDeValor;
 using System.Linq;
 using CSharpFunctionalExtensions;
+using System.Collections.Generic;
+using HowToDevelop.HealthFood.Setores.Application.Dtos;
 
 namespace HowToDevelop.Dominio.Integration.Tests
 {
@@ -103,6 +105,48 @@ namespace HowToDevelop.Dominio.Integration.Tests
             setorAssertion.Nome.ShouldBe((Nome.Criar(SetoresRepositorioTestFixture.NomeSetorAlterado).Value));
             setorAssertion.Sigla.ShouldBe((Sigla.Criar(SetoresRepositorioTestFixture.SiglaSetorAlterado).Value));
             setorAssertion.Mesas.Count.ShouldBe(0);
+        }
+
+        [Fact(DisplayName = "ObterComMesasPorIdAsync Deve Ter Sucesso"), Order(4)]
+        [Trait(nameof(SetoresRepositorio), nameof(SetoresRepositorio.ObterComMesasPorIdAsync))]
+        public async Task SetoresRepositorio_ObterComMesasPorIdAsync_DeveTerSucesso()
+        {
+            // Arrange
+            using HealthFoodDbContext context = _fixture.GetContext();
+            var repositorio = new SetoresRepositorio(context);
+
+            //Act
+            Maybe<Setor> setor = await repositorio.ObterComMesasPorIdAsync(_setoresFixture.SetorIdIncluido);
+
+            //Assert
+            setor.HasValue.ShouldBeTrue();
+            var setorAssertion = setor.Value;
+            setorAssertion.Nome.ShouldBe((Nome.Criar(SetoresRepositorioTestFixture.NomeSetorAlterado).Value));
+            setorAssertion.Sigla.ShouldBe((Sigla.Criar(SetoresRepositorioTestFixture.SiglaSetorAlterado).Value));
+            setorAssertion.Mesas.Count.ShouldBe(_setoresFixture.MesasAdicionar.Length -1);
+            setorAssertion.Mesas.FirstOrDefault(m => m.Numeracao == SetoresRepositorioTestFixture.MesaRemover)
+                .ShouldBeNull();
+        }
+        
+        [Fact(DisplayName = "ObterTodosSetorInfoAsync Deve Ter Sucesso"), Order(5)]
+        [Trait(nameof(SetoresRepositorio), nameof(SetoresRepositorio.ObterTodosSetorInfoAsync))]
+        public async Task SetoresRepositorio_ObterTodosSetorInfoAsync_DeveTerSucesso()
+        {
+            // Arrange
+            using HealthFoodDbContext context = _fixture.GetContext();
+            var repositorio = new SetoresRepositorio(context);
+
+            //Act
+            IEnumerable<SetorInfoDto> setores = await repositorio.ObterTodosSetorInfoAsync();
+
+            //Assert
+            setores.Count().ShouldBe(4);
+            setores.Any(s => s.PossuiAtendente).ShouldBeTrue();
+            SetorInfoDto setorAssertion = setores.FirstOrDefault(x => x.Id == _setoresFixture.SetorIdIncluido);
+            setorAssertion.ShouldNotBeNull();
+            setorAssertion.QuantidadeMesas.ShouldBe(_setoresFixture.MesasAdicionar.Length - 1);
+            setorAssertion.PossuiAtendente.ShouldBeFalse();
+
         }
     }
 }

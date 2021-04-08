@@ -25,9 +25,9 @@ namespace HowToDevelop.HealthFood.Dominio.ContextoDelimitado.Setores.Infraestrut
                                               OUTER APPLY (SELECT COUNT(m.Id) as QT 
 	  		                                                 FROM Mesas m
 			                                                WHERE m.SetorId = s.Id) as qm
-                                              OUTER APPLY (SELECT COUNT(s.Id) as QT 
-				                                             FROM SetoresAtendimento s
-				                                            WHERE s.SetorId = s.Id) as sa";
+                                              OUTER APPLY (SELECT COUNT(Id) as QT 
+				                                             FROM SetoresAtendimento 
+				                                            WHERE SetorId = s.Id) as sa";
 
         public IUnitOfWork UnitOfWork => _context;
         private readonly IDbConnection _connection;

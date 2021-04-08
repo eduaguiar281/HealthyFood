@@ -19,3 +19,7 @@
 /src/HowToDevelop.DockerUtils/obj
 /tests/HowToDevelop.Dominio.Integration.Tests/bin/Debug/net5.0
 /tests/HowToDevelop.Dominio.Integration.Tests/obj
+/src/HowToDevelop.Core/bin/Debug/net5.0
+/src/HowToDevelop.HealthFood.Models/bin/Debug/net5.0
+/src/HowToDevelop.HealthFood.WebApp/bin/Debug/net5.0
+/tests/HowToDevelop.Dominio.Tests/bin/Debug/net5.0

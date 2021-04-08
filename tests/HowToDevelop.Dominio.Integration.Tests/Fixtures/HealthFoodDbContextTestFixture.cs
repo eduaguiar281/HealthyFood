@@ -3,14 +3,9 @@ using HowToDevelop.DockerUtils.Artifacts;
 using HowToDevelop.Dominio.Integration.Tests.Helpers;
 using HowToDevelop.HealthFood.Infraestrutura;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Extensions.Ordering;
 
 namespace HowToDevelop.Dominio.Integration.Tests.Fixtures
 {
