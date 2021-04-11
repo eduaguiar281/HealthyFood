@@ -1,7 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.Interfaces.Infraestrutura;
-using HowToDevelop.HealthFood.Infraestrutura;
-using HowToDevelop.HealthFood.Infraestrutura.Setores;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +8,7 @@ using System.Data;
 using HowToDevelop.HealthFood.Setores.Application.Dtos;
 using HowToDevelop.HealthFood.Setores;
 
-namespace HowToDevelop.HealthFood.Dominio.ContextoDelimitado.Setores.Infraestrutura
+namespace HowToDevelop.HealthFood.Infraestrutura.Setores
 {
     public class SetoresRepositorio : ISetoresRepositorio
     {

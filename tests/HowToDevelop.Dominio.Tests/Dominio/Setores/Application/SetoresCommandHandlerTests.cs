@@ -212,7 +212,7 @@ namespace HowToDevelop.Dominio.Tests.Dominio.Setores.Application
             _fixture.Repositorio.Verify(r => r.ObterPorIdAsync(setor.Id), Times.Once);
             _fixture.Repositorio.Verify(r => r.Remover(setor), Times.Once);
             _fixture.UnitOfWork.Verify(r => r.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
-            result.Value.ShouldBe(command.SetorId);
+            result.Value.ShouldBe(command.RaizAgregacaoId);
         }
 
         [Fact(DisplayName = "Excluir Setor Setor Id Inválido Deve Falhar")]

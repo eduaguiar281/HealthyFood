@@ -1,5 +1,4 @@
 ﻿using HowToDevelop.Dominio.Integration.Tests.Fixtures;
-using HowToDevelop.HealthFood.Dominio.ContextoDelimitado.Setores.Infraestrutura;
 using HowToDevelop.HealthFood.Infraestrutura;
 using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +11,7 @@ using System.Linq;
 using CSharpFunctionalExtensions;
 using System.Collections.Generic;
 using HowToDevelop.HealthFood.Setores.Application.Dtos;
+using HowToDevelop.HealthFood.Infraestrutura.Setores;
 
 namespace HowToDevelop.Dominio.Integration.Tests
 {

@@ -1,6 +1,5 @@
 ﻿using HowToDevelop.Core.Comunicacao;
 using HowToDevelop.Core.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace HowToDevelop.Core.Entidade

@@ -47,10 +47,10 @@ namespace HowToDevelop.HealthFood.Setores.Application.Commands
 
         public async Task<Result<SetorDto>> Handle(AlterarDescricaoSetorCommand request, CancellationToken cancellationToken)
         {
-            Maybe<Setor> setor = await _repositorio.ObterPorIdAsync(request.Id);
+            Maybe<Setor> setor = await _repositorio.ObterPorIdAsync(request.RaizAgregacaoId);
             if (setor.HasNoValue)
             {
-                return Result.Failure<SetorDto>(string.Format(SetoresConstantes.NaoFoiEncontrarSetorInformado, request.Id));
+                return Result.Failure<SetorDto>(string.Format(SetoresConstantes.NaoFoiEncontrarSetorInformado, request.RaizAgregacaoId));
             }
 
             var (_, isFailure, erro) = setor.Value.AlterarDescricaoSetor(request.Nome, request.Sigla);
@@ -72,10 +72,10 @@ namespace HowToDevelop.HealthFood.Setores.Application.Commands
 
         public async Task<Result<IEnumerable<MesaDto>>> Handle(RemoverMesaSetorCommand request, CancellationToken cancellationToken)
         {
-            Maybe<Setor> setor = await _repositorio.ObterComMesasPorIdAsync(request.SetorId);
+            Maybe<Setor> setor = await _repositorio.ObterComMesasPorIdAsync(request.RaizAgregacaoId);
             if (setor.HasNoValue)
             {
-                return Result.Failure<IEnumerable<MesaDto>>(string.Format(SetoresConstantes.NaoFoiEncontrarSetorInformado, request.SetorId));
+                return Result.Failure<IEnumerable<MesaDto>>(string.Format(SetoresConstantes.NaoFoiEncontrarSetorInformado, request.RaizAgregacaoId));
             }
 
             var (_, isFailure, erro) = setor.Value.RemoverMesa(request.Numeracao);
@@ -96,10 +96,10 @@ namespace HowToDevelop.HealthFood.Setores.Application.Commands
 
         public async Task<Result<IEnumerable<MesaDto>>> Handle(AdicionarMesaSetorCommand request, CancellationToken cancellationToken)
         {
-            Maybe<Setor> setor = await _repositorio.ObterComMesasPorIdAsync(request.SetorId);
+            Maybe<Setor> setor = await _repositorio.ObterComMesasPorIdAsync(request.RaizAgregacaoId);
             if (setor.HasNoValue)
             {
-                return Result.Failure<IEnumerable<MesaDto>>(string.Format(SetoresConstantes.NaoFoiEncontrarSetorInformado, request.SetorId));
+                return Result.Failure<IEnumerable<MesaDto>>(string.Format(SetoresConstantes.NaoFoiEncontrarSetorInformado, request.RaizAgregacaoId));
             }
 
             var (_, isFailure, erro) = setor.Value.AdicionarMesa(request.Numeracao);
@@ -120,10 +120,10 @@ namespace HowToDevelop.HealthFood.Setores.Application.Commands
 
         public async Task<Result<int>> Handle(ExcluirSetorCommand request, CancellationToken cancellationToken)
         {
-            Maybe<Setor> setor = await _repositorio.ObterPorIdAsync(request.SetorId);
+            Maybe<Setor> setor = await _repositorio.ObterPorIdAsync(request.RaizAgregacaoId);
             if (setor.HasNoValue)
             {
-                return Result.Failure<int>(string.Format(SetoresConstantes.NaoFoiEncontrarSetorInformado, request.SetorId));
+                return Result.Failure<int>(string.Format(SetoresConstantes.NaoFoiEncontrarSetorInformado, request.RaizAgregacaoId));
             }
 
             _repositorio.Remover(setor.Value);
@@ -133,7 +133,7 @@ namespace HowToDevelop.HealthFood.Setores.Application.Commands
                 return Result.Failure<int>(SetoresConstantes.NaoFoiPossivelRemoverSetor);
             }
 
-            return Result.Success(request.SetorId);
+            return Result.Success(request.RaizAgregacaoId);
         }
     }
 }

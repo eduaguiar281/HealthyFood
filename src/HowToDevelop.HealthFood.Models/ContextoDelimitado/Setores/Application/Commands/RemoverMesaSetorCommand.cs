@@ -4,16 +4,14 @@ using System.Collections.Generic;
 
 namespace HowToDevelop.HealthFood.Setores.Application.Commands
 {
-    public class RemoverMesaSetorCommand : Command<IEnumerable<MesaDto>>
+    public class RemoverMesaSetorCommand : Command<IEnumerable<MesaDto>, int>
     {
         public RemoverMesaSetorCommand(in int setorId, in ushort numeracao)
+            :base(setorId)
         {
-            SetorId = setorId;
             Numeracao = numeracao;
         }
 
-        public int SetorId { get; }
         public ushort Numeracao { get; }
-
     }
 }
