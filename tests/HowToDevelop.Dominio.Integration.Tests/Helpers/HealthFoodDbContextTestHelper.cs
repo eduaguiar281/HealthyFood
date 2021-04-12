@@ -1,7 +1,9 @@
-﻿using Bogus;
+﻿using AutoMapper;
+using Bogus;
 using HowToDevelop.Core.Comunicacao;
 using HowToDevelop.Core.Comunicacao.Mediator;
 using HowToDevelop.HealthFood.Infraestrutura;
+using HowToDevelop.HealthFood.Infraestrutura.AutoMapperExtensions;
 using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +27,9 @@ namespace HowToDevelop.Dominio.Integration.Tests.Helpers
             _mediatorHandler = new Mock<IMediatorHandler>();
             _mediatorHandler.Setup(m => m.PublicarEvento(It.IsAny<Evento>()))
                 .Returns(Task.CompletedTask);
+
+            var config = new MapperConfiguration(cfg => cfg.AddProfile(new DomainModelToDtoMappingProfile()));
+            AutoMapperConfiguration.Init(config);
         }
 
         public HealthFoodDbContext CreateContext()

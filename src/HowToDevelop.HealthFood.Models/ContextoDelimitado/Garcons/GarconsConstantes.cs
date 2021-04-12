@@ -11,5 +11,6 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Garcons
         public const string SetorIdNaoEhValido = "SetorId não é válido!";
         public const string GarcomIdNaoEhValido = "GarcomId não é válido!";
         public const string GarcomDeveTerNoMinimoUmSetorVinculado = "Garçom deve ter no mínimo um setor vinculado!";
+        public const string NaoFoiPossivelSalvarGarcom = "Não foi possível salvar o garçom informado!";
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace HowToDevelop.HealthFood.Garcons.Application.Commands
 {
-    public class IncluirGarcomCommand : Command<IEnumerable<GarcomDto>>
+    public class IncluirGarcomCommand : Command<GarcomDto>
     {
         public IncluirGarcomCommand(in string nome, in string apelido)
         {
