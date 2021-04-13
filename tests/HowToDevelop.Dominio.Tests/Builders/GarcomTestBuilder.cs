@@ -4,7 +4,7 @@ using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 
 namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
 {
-    public class GarcomTestBuilder: ITestBuilder<Result<Garcom>>
+    public class GarcomTestBuilder : ITestBuilder<Result<Garcom>>
     {
         public GarcomTestBuilder()
         {

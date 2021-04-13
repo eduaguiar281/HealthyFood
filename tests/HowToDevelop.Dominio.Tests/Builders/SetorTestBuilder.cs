@@ -3,7 +3,7 @@ using HowToDevelop.HealthFood.Setores;
 
 namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
 {
-    public class SetorTestBuilder
+    public class SetorTestBuilder : ITestBuilder<Result<Setor>>
     {
         public SetorTestBuilder()
         {
