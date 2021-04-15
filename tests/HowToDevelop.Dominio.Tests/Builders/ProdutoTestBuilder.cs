@@ -1,9 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
-using HowToDevelop.HealthFood.Infraestrutura.Produtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using HowToDevelop.HealthFood.Produtos;
 
 namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
 {
@@ -14,7 +11,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
         {
             Reiniciar();
         }
-        
+
         public string CodigoBarras { get; private set; }
         public string Descricao { get; private set; }
         public Preco Preco { get; private set; }
@@ -46,24 +43,24 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
 
         public Result<Produto> Build()
         {
-            switch(Tipo)
+            switch (Tipo)
             {
                 case TipoProduto.Bebida:
-                {
-                    return Produto.CriarTipoBebida(CodigoBarras, Descricao, Preco, 1);
-                }
+                    {
+                        return Produto.CriarTipoBebida(CodigoBarras, Descricao, Preco, 1);
+                    }
                 case TipoProduto.Lanche:
-                {
-                    return Produto.CriarTipoLanche(CodigoBarras, Descricao, Preco, 1);
-                }
+                    {
+                        return Produto.CriarTipoLanche(CodigoBarras, Descricao, Preco, 1);
+                    }
                 case TipoProduto.Outros:
-                {
-                    return Produto.CriarTipoOutros(CodigoBarras, Descricao, Preco, 1);
-                }
+                    {
+                        return Produto.CriarTipoOutros(CodigoBarras, Descricao, Preco, 1);
+                    }
                 default:
-                {
-                    return Produto.CriarTipoOutros(CodigoBarras, Descricao, Preco, 1);
-                }
+                    {
+                        return Produto.CriarTipoOutros(CodigoBarras, Descricao, Preco, 1);
+                    }
             }
         }
 
