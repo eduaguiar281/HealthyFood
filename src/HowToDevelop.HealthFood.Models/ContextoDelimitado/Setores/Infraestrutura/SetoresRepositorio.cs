@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Data;
 using HowToDevelop.HealthFood.Setores.Application.Dtos;
-using HowToDevelop.HealthFood.Setores;
+using HowToDevelop.HealthFood.Infraestrutura;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Setores
+namespace HowToDevelop.HealthFood.Setores.Infraestrutura
 {
     public class SetoresRepositorio : ISetoresRepositorio
     {

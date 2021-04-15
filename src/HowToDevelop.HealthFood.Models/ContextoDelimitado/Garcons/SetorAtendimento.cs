@@ -3,7 +3,7 @@ using HowToDevelop.Core;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Garcons
+namespace HowToDevelop.HealthFood.Garcons
 {
     public sealed class SetorAtendimento: Entidade<int>
     {

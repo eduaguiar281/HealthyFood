@@ -1,11 +1,11 @@
-﻿using HowToDevelop.Core.ObjetosDeValor.EntityConverters;
-using HowToDevelop.HealthFood.Infraestrutura.Produtos;
+﻿using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.Core.ObjetosDeValor.EntityConverters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Setores
+namespace HowToDevelop.HealthFood.Produtos.Infraestrutura
 {
     [ExcludeFromCodeCoverage]
     public class ProdutoEntityTypeConfiguration : IEntityTypeConfiguration<Produto>
@@ -19,7 +19,8 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Setores
                 .HasMaxLength(ProdutosConstantes.ProdutoTamanhoCampoCodigoBarras);
 
             builder.Property(p => p.Descricao)
-                .HasMaxLength(ProdutosConstantes.ProdutoTamanhoCampoDescricao);
+                .HasConversion(EFTypeConverters.DescricaoConverter)
+                .HasMaxLength(DescricaoConstantes.DescricaoTamanhoMaximoPadrao);
 
             builder.Property(p => p.Preco)
                 .HasConversion(EFTypeConverters.PrecoConverter);

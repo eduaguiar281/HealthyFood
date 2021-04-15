@@ -6,14 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.Core.ObjetosDeValor
 {
-    public class Nome: ValueObject
+    public class Nome : ValueObject
     {
         [ExcludeFromCodeCoverage]
         protected Nome()
         {
 
         }
-
         private Nome(in string nome)
         {
             Valor = nome;
@@ -40,10 +39,10 @@ namespace HowToDevelop.Core.ObjetosDeValor
                 nome.TamanhoMenorOuIgual(NomeConstantes.NomeTamanhoMaximoPadrao,
                 string.Format(NomeConstantes.NomeDeveTerNoMaximo, NomeConstantes.NomeTamanhoMaximoPadrao)),
                 nome.NaoDeveSerNuloOuVazio(NomeConstantes.NomeEhObrigatorio));
-            
+
             if (isFailure)
                 return Result.Failure<Nome>(erro);
-            
+
             return Result.Success(new Nome(nome));
         }
     }

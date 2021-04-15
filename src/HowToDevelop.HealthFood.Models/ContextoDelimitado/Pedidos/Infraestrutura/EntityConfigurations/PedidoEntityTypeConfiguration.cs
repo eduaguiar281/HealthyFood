@@ -1,5 +1,5 @@
 ﻿using HowToDevelop.Core.ObjetosDeValor.EntityConverters;
-using HowToDevelop.HealthFood.Infraestrutura.Garcons;
+using HowToDevelop.HealthFood.Garcons;
 using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
 using HowToDevelop.HealthFood.Infraestrutura.Pedidos.ObjetosDeValor;
 using HowToDevelop.HealthFood.Setores;
@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Setores
+namespace HowToDevelop.HealthFood.Pedidos.Infraestrutura
 {
     [ExcludeFromCodeCoverage]
     public class PedidoEntityTypeConfiguration : IEntityTypeConfiguration<Pedido>

@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Setores
+namespace HowToDevelop.HealthFood.Setores.Infraestrutura
 {
     [ExcludeFromCodeCoverage]
-    public class SetorEntityTypeConfiguration : IEntityTypeConfiguration<HealthFood.Setores.Setor>
+    public class SetorEntityTypeConfiguration : IEntityTypeConfiguration<Setor>
     {
-        public void Configure(EntityTypeBuilder<HealthFood.Setores.Setor> builder)
+        public void Configure(EntityTypeBuilder<Setor> builder)
         {
             builder.ToTable("Setores");
             builder.HasKey(s => s.Id);
@@ -30,7 +30,6 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Setores
                .Metadata
                .PrincipalToDependent
                .SetField("_mesas");
-
         }
     }
 }

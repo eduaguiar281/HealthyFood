@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Garcons
+namespace HowToDevelop.HealthFood.Garcons.Infraestrutura
 {
     public interface IGarconsRepositorio : IRepository<Garcom>
     {
@@ -17,6 +17,6 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Garcons
 
         Task<bool> SetorExiste(int setorId);
 
-        Task<IEnumerable<GarcomInfoDto>> ObterTodosGarconsAsync()
+        Task<IEnumerable<GarcomInfoDto>> ObterTodosGarconsAsync();
     }
 }

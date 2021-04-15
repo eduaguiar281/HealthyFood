@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Shouldly;
-using CSharpFunctionalExtensions;
-using Xunit;
-using HowToDevelop.HealthFood.Infraestrutura.Produtos;
-using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
+﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
+using HowToDevelop.HealthFood.Produtos;
+using Shouldly;
+using Xunit;
 
 namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Produtos
 {
@@ -130,7 +127,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Produtos
 
             //Assert
             produto.IsFailure.ShouldBeTrue();
-            produto.Error.ShouldContain(ProdutosConstantes.ProdutoDescricaoEhObrigatorio);
+            produto.Error.ShouldContain(DescricaoConstantes.DescricaoEhObrigatorio);
         }
 
         [Fact(DisplayName = "Descrição Acima do Limite de Caracteres Deve Falhar")]
@@ -139,12 +136,12 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Produtos
         {
             //Arrange & Act
             var produto = new ProdutoTestBuilder()
-                .ComDescricao("Coca-Cola".PadRight(ProdutosConstantes.ProdutoTamanhoCampoDescricao + 5))
+                .ComDescricao("Coca-Cola".PadRight(DescricaoConstantes.DescricaoTamanhoMaximoPadrao + 5))
                 .Build();
 
             //Assert
             produto.IsFailure.ShouldBeTrue();
-            produto.Error.ShouldContain(ProdutosConstantes.ProdutoDescricaoDeveTerNoMaximoNCaracteres);
+            produto.Error.ShouldContain(string.Format(DescricaoConstantes.DescricaoDeveTerNoMaximo, DescricaoConstantes.DescricaoTamanhoMaximoPadrao));
         }
 
         [Fact(DisplayName = "Alteração Valores Validos Deve Ter Sucesso")]
@@ -156,7 +153,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Produtos
                 .Build().Value;
             string novoCodigoBarras = "7891112031968";
             string novaDescricao = "Fanta Laranja";
-            Preco novoPreco = new Preco(2.99m);
+            var novoPreco = new Preco(2.99m);
 
             //Act
             Result result = produto.AlterarDados(novoCodigoBarras, novaDescricao, novoPreco);
@@ -165,7 +162,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Produtos
             result.IsSuccess.ShouldBeTrue();
             produto.CodigoBarras.ShouldBe(novoCodigoBarras);
             produto.Preco.ShouldBe(novoPreco);
-            produto.Descricao.ShouldBe(novaDescricao);
+            produto.Descricao.Valor.ShouldBe(novaDescricao);
         }
 
         [Fact(DisplayName = "Alteração Valores Inválidos Deve Falhar")]
@@ -187,7 +184,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Produtos
             result.Error.ShouldContain(ProdutosConstantes.ProdutoPrecoNaoFoiInformado);
             produto.CodigoBarras.ShouldNotBe(novaDescricao);
             produto.Preco.ShouldNotBe(novoPreco);
-            produto.Descricao.ShouldNotBe(novaDescricao);
+            produto.Descricao.Valor.ShouldNotBe(novaDescricao);
         }
 
     }

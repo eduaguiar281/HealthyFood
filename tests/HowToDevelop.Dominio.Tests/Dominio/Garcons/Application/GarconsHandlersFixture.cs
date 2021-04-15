@@ -1,6 +1,6 @@
 ﻿using HowToDevelop.Dominio.Tests.Fixtures;
 using HowToDevelop.HealthFood.Garcons.Application.Commands;
-using HowToDevelop.HealthFood.Infraestrutura.Garcons;
+using HowToDevelop.HealthFood.Garcons.Infraestrutura;
 using Xunit;
 
 namespace HowToDevelop.Dominio.Tests.Dominio.Garcons.Application

@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using HowToDevelop.Core.Interfaces.Infraestrutura;
+﻿using HowToDevelop.Dominio.Tests.Fixtures;
 using HowToDevelop.HealthFood.Setores.Application.Commands;
-using HowToDevelop.HealthFood.Infraestrutura.AutoMapperExtensions;
-using HowToDevelop.HealthFood.Infraestrutura.Setores;
-using Moq;
-using Moq.Language.Flow;
-using System;
-using System.Linq.Expressions;
-using Xunit;
 using HowToDevelop.HealthFood.Setores.Application.Queries;
-using HowToDevelop.Dominio.Tests.Fixtures;
+using HowToDevelop.HealthFood.Setores.Infraestrutura;
+using Xunit;
 
 namespace HowToDevelop.Dominio.Tests.Dominio.Setores.Application
 {

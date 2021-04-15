@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.HealthFood.Garcons.Application.Dtos;
+using HowToDevelop.HealthFood.Garcons.Infraestrutura;
 using HowToDevelop.HealthFood.Infraestrutura.AutoMapperExtensions;
-using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;

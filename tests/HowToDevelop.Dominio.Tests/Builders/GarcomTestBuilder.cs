@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
-using HowToDevelop.HealthFood.Infraestrutura.Garcons;
+using HowToDevelop.HealthFood.Garcons;
 
 namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Builders
 {

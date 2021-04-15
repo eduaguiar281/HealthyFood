@@ -1,10 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Dominio.Integration.Tests.Fixtures;
+using HowToDevelop.HealthFood.Garcons;
 using HowToDevelop.HealthFood.Garcons.Application.Commands;
 using HowToDevelop.HealthFood.Garcons.Application.Dtos;
+using HowToDevelop.HealthFood.Garcons.Infraestrutura;
 using HowToDevelop.HealthFood.Infraestrutura;
-using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
@@ -17,12 +18,12 @@ using Xunit.Extensions.Ordering;
 
 namespace HowToDevelop.Dominio.Integration.Tests
 {
-    public class GarconsCommandHandlerTests : IAssemblyFixture<GarcomHandlerTestFixture>, IAssemblyFixture<HealthFoodDbContextTestFixture>
+    public class GarconsCommandHandlerTests : IAssemblyFixture<GarcomTestFixture>, IAssemblyFixture<HealthFoodDbContextTestFixture>
     {
-        private readonly GarcomHandlerTestFixture _garcomFixture;
+        private readonly GarcomTestFixture _garcomFixture;
         private readonly HealthFoodDbContextTestFixture _fixture;
 
-        public GarconsCommandHandlerTests(GarcomHandlerTestFixture garcomFixture, HealthFoodDbContextTestFixture fixture)
+        public GarconsCommandHandlerTests(GarcomTestFixture garcomFixture, HealthFoodDbContextTestFixture fixture)
         {
             _garcomFixture = garcomFixture;
             _fixture = fixture;
@@ -33,8 +34,8 @@ namespace HowToDevelop.Dominio.Integration.Tests
         public async Task GarconsCommandHandler_HandlerIncluirGarcomCommand_DeveTerSucesso()
         {
             // Arrange
-            var command = new IncluirGarcomCommand(GarcomHandlerTestFixture.NomeGarcomIncluido,
-                GarcomHandlerTestFixture.ApelidoGarcomIncluido);
+            var command = new IncluirGarcomCommand(GarcomTestFixture.NomeGarcomIncluido,
+                GarcomTestFixture.ApelidoGarcomIncluido);
             using HealthFoodDbContext context = _fixture.GetContext();
             var handler = new GarconsCommandHandler(new GarconsRepositorio(context));
 
@@ -52,8 +53,8 @@ namespace HowToDevelop.Dominio.Integration.Tests
             Garcom garcomAssertion = await contextAssertion.Garcons
                 .FirstOrDefaultAsync(s => s.Id == _garcomFixture.GarcomIdIncluido);
             garcomAssertion.ShouldNotBeNull();
-            garcomAssertion.Nome.ShouldBe((Nome.Criar(GarcomHandlerTestFixture.NomeGarcomIncluido).Value));
-            garcomAssertion.Apelido.ShouldBe((Apelido.Criar(GarcomHandlerTestFixture.ApelidoGarcomIncluido).Value));
+            garcomAssertion.Nome.ShouldBe((Nome.Criar(GarcomTestFixture.NomeGarcomIncluido).Value));
+            garcomAssertion.Apelido.ShouldBe((Apelido.Criar(GarcomTestFixture.ApelidoGarcomIncluido).Value));
         }
 
         [Fact(DisplayName = "Alterar Dados Pessoais Deve Ter Sucesso"), Order(2)]
@@ -62,8 +63,8 @@ namespace HowToDevelop.Dominio.Integration.Tests
         {
             // Arrange
             var command = new AlterarDadosPessoaisGarcomCommand(_garcomFixture.GarcomIdIncluido,
-                GarcomHandlerTestFixture.NomeGarcomAlterado,
-                GarcomHandlerTestFixture.ApelidoGarcomAlterado);
+                GarcomTestFixture.NomeGarcomAlterado,
+                GarcomTestFixture.ApelidoGarcomAlterado);
             
             using HealthFoodDbContext context = _fixture.GetContext();
             var handler = new GarconsCommandHandler(new GarconsRepositorio(context));
@@ -81,8 +82,8 @@ namespace HowToDevelop.Dominio.Integration.Tests
             Garcom garcomAssertion = await contextAssertion.Garcons
                 .FirstOrDefaultAsync(s => s.Id == _garcomFixture.GarcomIdIncluido);
             garcomAssertion.ShouldNotBeNull();
-            garcomAssertion.Nome.ShouldBe((Nome.Criar(GarcomHandlerTestFixture.NomeGarcomAlterado).Value));
-            garcomAssertion.Apelido.ShouldBe((Apelido.Criar(GarcomHandlerTestFixture.ApelidoGarcomAlterado).Value));
+            garcomAssertion.Nome.ShouldBe((Nome.Criar(GarcomTestFixture.NomeGarcomAlterado).Value));
+            garcomAssertion.Apelido.ShouldBe((Apelido.Criar(GarcomTestFixture.ApelidoGarcomAlterado).Value));
         }
 
         [Fact(DisplayName = "Vincular Setor Ao Garcom Deve Ter Sucesso"), Order(3)]

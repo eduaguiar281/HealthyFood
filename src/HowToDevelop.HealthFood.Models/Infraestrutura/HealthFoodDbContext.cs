@@ -1,11 +1,14 @@
 ﻿using HowToDevelop.Core.Comunicacao;
 using HowToDevelop.Core.Comunicacao.Mediator;
 using HowToDevelop.Core.Interfaces.Infraestrutura;
-using HowToDevelop.HealthFood.Infraestrutura.Garcons;
+using HowToDevelop.HealthFood.Garcons;
+using HowToDevelop.HealthFood.Garcons.Infraestrutura;
 using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
-using HowToDevelop.HealthFood.Infraestrutura.Produtos;
-using HowToDevelop.HealthFood.Infraestrutura.Setores;
+using HowToDevelop.HealthFood.Pedidos.Infraestrutura;
+using HowToDevelop.HealthFood.Produtos;
+using HowToDevelop.HealthFood.Produtos.Infraestrutura;
 using HowToDevelop.HealthFood.Setores;
+using HowToDevelop.HealthFood.Setores.Infraestrutura;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -72,7 +75,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura
                 }
             }
 
-            int result = await base.SaveChangesAsync();
+            int result = await base.SaveChangesAsync(cancellationToken);
             if (result > 0)
             {
                 await _mediatorHandler.PublicarEventos(this);

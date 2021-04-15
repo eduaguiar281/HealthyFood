@@ -2,9 +2,9 @@
 using Bogus;
 using HowToDevelop.Core.Comunicacao;
 using HowToDevelop.Core.Comunicacao.Mediator;
+using HowToDevelop.HealthFood.Garcons;
 using HowToDevelop.HealthFood.Infraestrutura;
 using HowToDevelop.HealthFood.Infraestrutura.AutoMapperExtensions;
-using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 using HowToDevelop.HealthFood.Setores;
 using Microsoft.EntityFrameworkCore;
 using Moq;

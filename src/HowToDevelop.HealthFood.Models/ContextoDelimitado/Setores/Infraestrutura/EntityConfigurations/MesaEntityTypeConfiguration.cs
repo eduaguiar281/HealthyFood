@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Setores
+namespace HowToDevelop.HealthFood.Setores.Infraestrutura
 {
     [ExcludeFromCodeCoverage]
     public class MesaEntityTypeConfiguration : IEntityTypeConfiguration<Mesa>

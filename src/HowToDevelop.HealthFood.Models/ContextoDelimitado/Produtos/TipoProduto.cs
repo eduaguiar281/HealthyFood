@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HowToDevelop.HealthFood.Infraestrutura.Produtos
+﻿namespace HowToDevelop.HealthFood.Produtos
 {
     public enum TipoProduto
     {

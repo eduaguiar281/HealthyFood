@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Dominio.Tests.Builders;
+using HowToDevelop.HealthFood.Garcons;
 using HowToDevelop.HealthFood.Garcons.Application.Commands;
 using HowToDevelop.HealthFood.Garcons.Application.Dtos;
-using HowToDevelop.HealthFood.Infraestrutura.Garcons;
 using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
 using Moq;
 using Shouldly;

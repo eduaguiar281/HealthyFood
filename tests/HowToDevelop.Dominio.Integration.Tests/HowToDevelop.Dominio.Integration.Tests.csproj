@@ -40,6 +40,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\HowToDevelop.DockerUtils\HowToDevelop.DockerUtils.csproj" />
     <ProjectReference Include="..\..\src\HowToDevelop.HealthFood.Models\HowToDevelop.HealthFood.Dominio.csproj" />
+    <ProjectReference Include="..\HowToDevelop.Dominio.Tests\HowToDevelop.Dominio.Tests.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@ using System.Linq;
 using CSharpFunctionalExtensions;
 using System.Collections.Generic;
 using HowToDevelop.HealthFood.Setores.Application.Dtos;
-using HowToDevelop.HealthFood.Infraestrutura.Setores;
+using HowToDevelop.HealthFood.Setores.Infraestrutura;
 
 namespace HowToDevelop.Dominio.Integration.Tests
 {

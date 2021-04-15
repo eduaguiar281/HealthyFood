@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.HealthFood.Infraestrutura.AutoMapperExtensions;
-using HowToDevelop.HealthFood.Infraestrutura.Setores;
 using HowToDevelop.HealthFood.Setores.Application.Dtos;
+using HowToDevelop.HealthFood.Setores.Infraestrutura;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;

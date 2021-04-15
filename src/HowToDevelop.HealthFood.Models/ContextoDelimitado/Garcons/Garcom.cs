@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Garcons
+namespace HowToDevelop.HealthFood.Garcons
 {
     public sealed class Garcom: RaizAgregacao<int>
     {

@@ -2,13 +2,14 @@
 using Dapper;
 using HowToDevelop.Core.Interfaces.Infraestrutura;
 using HowToDevelop.HealthFood.Garcons.Application.Dtos;
+using HowToDevelop.HealthFood.Infraestrutura;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Garcons
+namespace HowToDevelop.HealthFood.Garcons.Infraestrutura
 {
     public class GarconsRepositorio : IGarconsRepositorio
     {

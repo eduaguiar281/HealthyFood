@@ -1,11 +1,11 @@
 ﻿using HowToDevelop.Core.ObjetosDeValor.EntityConverters;
 using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
-using HowToDevelop.HealthFood.Infraestrutura.Produtos;
+using HowToDevelop.HealthFood.Produtos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HowToDevelop.HealthFood.Infraestrutura.Setores
+namespace HowToDevelop.HealthFood.Pedidos.Infraestrutura
 {
     [ExcludeFromCodeCoverage]
     public class ItensPedidoEntityTypeConfiguration : IEntityTypeConfiguration<ItensPedido>
