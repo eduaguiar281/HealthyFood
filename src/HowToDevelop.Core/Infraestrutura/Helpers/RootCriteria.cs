@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace HowToDevelop.Core.Infraestrutura.Helpers
@@ -65,6 +66,38 @@ namespace HowToDevelop.Core.Infraestrutura.Helpers
                     return string.Empty;
             }
 
+        }
+
+        private Dictionary<string, object> ResolveParameters(Criteria criteria)
+        {
+            switch (criteria)
+            {
+                case SingleCriteria:
+                    {
+                        Tuple<string, object> parameter = (criteria as SingleCriteria).Condition.GetParameter();
+                        var result = new Dictionary<string, object>();
+                        result.Add(parameter.Item1, parameter.Item2);
+                        return result;
+                    }
+                case RootCriteria:
+                    return (criteria as RootCriteria).GetParameters() ;
+                default:
+                    return new Dictionary<string, object>();
+            }
+
+        }
+
+        public Dictionary<string, object> GetParameters()
+        {
+            var results = new Dictionary<string, object>();
+            foreach (Criteria criteria in Childrens)
+            {
+                foreach(var item in ResolveParameters(criteria))
+                {
+                    results.Add(item.Key, item.Value);
+                }
+            }
+            return results;
         }
 
         public override string ToString()

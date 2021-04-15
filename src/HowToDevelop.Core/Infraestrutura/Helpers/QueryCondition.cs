@@ -1,14 +1,17 @@
-﻿namespace HowToDevelop.Core.Infraestrutura.Helpers
+﻿using System;
+using System.Collections.Generic;
+
+namespace HowToDevelop.Core.Infraestrutura.Helpers
 {
     public class QueryCondition
     {
         public QueryCondition(in string fieldName, in ComparisonOperator comparisonOperator,
-            in object paramenter, in string paramenterName)
+            in object parameter, in string parameterName)
         {
             FieldName = fieldName;
             Operator = comparisonOperator;
-            Parameter = paramenter;
-            ParameterName = paramenterName;
+            Parameter = parameter;
+            ParameterName = parameterName;
         }
         public string FieldName { get; }
         public ComparisonOperator Operator { get; }
@@ -37,6 +40,11 @@
                 default:
                     return string.Empty;
             }
+        }
+
+        public Tuple<string, object> GetParameter()
+        {
+            return new Tuple<string, object>(ParameterName, Parameter);
         }
     }
 }
