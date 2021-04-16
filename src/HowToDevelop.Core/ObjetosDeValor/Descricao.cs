@@ -1,11 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ValidacoesPadrao;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.Core.ObjetosDeValor
 {
     public class Descricao : ValueObject
     {
+        [ExcludeFromCodeCoverage]
         protected Descricao()
         {
 
