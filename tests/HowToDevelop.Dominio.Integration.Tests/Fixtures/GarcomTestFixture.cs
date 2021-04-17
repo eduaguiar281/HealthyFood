@@ -13,7 +13,6 @@
 
         }
         public int GarcomIdIncluido { get; set; }
-
         public int? SetorVinculado { get; set; }
         public string NomeSetorVinculado { get; set; }
     }
