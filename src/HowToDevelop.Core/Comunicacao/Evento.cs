@@ -1,5 +1,4 @@
 ﻿using HowToDevelop.Core.Comunicacao.Interfaces;
-using MediatR;
 using System;
 
 namespace HowToDevelop.Core.Comunicacao
@@ -9,6 +8,7 @@ namespace HowToDevelop.Core.Comunicacao
         public DateTime Timestamp { get; private set; }
 
         protected Evento()
+            :base()
         {
             Timestamp = DateTime.UtcNow;
         }

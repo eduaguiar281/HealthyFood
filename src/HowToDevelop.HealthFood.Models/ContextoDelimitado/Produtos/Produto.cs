@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HowToDevelop.HealthFood.Produtos
 {
-    public sealed class Produto : RaizAgregacao<int>
+    public sealed class Produto : RaizAgregacao
     {
         [ExcludeFromCodeCoverage]
         private Produto()

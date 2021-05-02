@@ -14,7 +14,15 @@ namespace HowToDevelop.DockerUtils.Artifacts
 
         public string Tag { get; private set; }
 
-        public string Image => $"{Name}:{Tag}";
+        public string Image
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Tag))
+                    return Name;
+                return $"{Name}:{Tag}";
+            }
+        }
 
         public static DockerImageInfo New(string name, string tag)
         {
@@ -27,11 +35,11 @@ namespace HowToDevelop.DockerUtils.Artifacts
             return new DockerImageInfo(name, tag);
         }
 
-        public static DockerImageInfo New(SqlServerDockerSettings sqlServerDockerSettings)
+        public static DockerImageInfo New(IDockerSettings dockerSettings)
         {
             return new DockerImageInfo(
-                sqlServerDockerSettings.DockerImageName,
-                sqlServerDockerSettings.DockerImageTag
+                dockerSettings.DockerImageName,
+                dockerSettings.DockerImageTag
             );
         }
     }

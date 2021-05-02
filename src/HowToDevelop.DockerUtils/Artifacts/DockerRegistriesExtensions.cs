@@ -26,5 +26,30 @@ namespace HowToDevelop.DockerUtils.Artifacts
             var dockerEngine = new DockerEngine(dockerClient);
             testDockerRegistries.AddRegistry(new SqlServer2019Registry(dockerEngine, settings));
         }
+
+        /// <summary>
+        /// Adciona um registrador para o MongoDb
+        /// </summary>
+        /// <param name="testDockerRegistries"></param>
+        /// <param name="dockerClient"></param>
+        /// <param name="settings"></param>
+        public static void RegisterMongoDb(this DockerRegistries testDockerRegistries, IDockerClient dockerClient,
+            MongoDbDockerSettings settings)
+        {
+            var dockerEngine = new DockerEngine(dockerClient);
+            testDockerRegistries.AddRegistry(new MongoDbRegistry(dockerEngine, settings));
+        }
+
+        /// <summary>
+        /// Adciona um registrador para o MongoDb
+        /// </summary>
+        /// <param name="testDockerRegistries"></param>
+        /// <param name="dockerEngine"></param>
+        /// <param name="settings"></param>
+        public static void RegisterMongoDb(this DockerRegistries testDockerRegistries, DockerEngine dockerEngine,
+            MongoDbDockerSettings settings)
+        {
+            testDockerRegistries.AddRegistry(new MongoDbRegistry(dockerEngine, settings));
+        }
     }
 }

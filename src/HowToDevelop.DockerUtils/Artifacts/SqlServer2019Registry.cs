@@ -71,15 +71,15 @@ namespace HowToDevelop.DockerUtils.Artifacts
         private async Task WaitUntilDatabaseAvailableAsync(int maxWaitTimeInSeconds, string connectionString)
         {
             var start = DateTime.UtcNow;
-            var connectionEstablised = false;
+            var connectionEstablished = false;
 
-            while (!connectionEstablised && start.AddSeconds(maxWaitTimeInSeconds) > DateTime.UtcNow)
+            while (!connectionEstablished && start.AddSeconds(maxWaitTimeInSeconds) > DateTime.UtcNow)
             {
                 try
                 {
                     using var sqlConnection = new SqlConnection(connectionString);
                     await sqlConnection.OpenAsync();
-                    connectionEstablised = true;
+                    connectionEstablished = true;
                 }
                 catch
                 {
@@ -88,7 +88,7 @@ namespace HowToDevelop.DockerUtils.Artifacts
                 }
             }
 
-            if (!connectionEstablised)
+            if (!connectionEstablished)
             {
                 throw new Exception($"Connection to the SQL docker database could not be established within {maxWaitTimeInSeconds} seconds.");
             }

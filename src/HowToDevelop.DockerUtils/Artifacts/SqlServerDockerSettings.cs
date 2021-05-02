@@ -5,7 +5,7 @@ namespace HowToDevelop.DockerUtils.Artifacts
     /// <summary>
     /// Configurações para criar um container de Sql Server no docker.
     /// </summary>
-    public class SqlServerDockerSettings
+    public class SqlServerDockerSettings : IDockerSettings
     {
         private const int DefaultTimeWaitUntilDatabaseStartedInSeconds = 60;
         public static SqlServerDockerSettings Default => new SqlServerDockerSettings(

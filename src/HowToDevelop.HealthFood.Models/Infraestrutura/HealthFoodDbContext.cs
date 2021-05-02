@@ -1,6 +1,8 @@
 ﻿using HowToDevelop.Core.Comunicacao;
 using HowToDevelop.Core.Comunicacao.Mediator;
+using HowToDevelop.Core.Entidade;
 using HowToDevelop.Core.Interfaces.Infraestrutura;
+using HowToDevelop.Core.StoredEvents;
 using HowToDevelop.HealthFood.Garcons;
 using HowToDevelop.HealthFood.Garcons.Infraestrutura;
 using HowToDevelop.HealthFood.Infraestrutura.Pedidos;
@@ -10,7 +12,9 @@ using HowToDevelop.HealthFood.Produtos.Infraestrutura;
 using HowToDevelop.HealthFood.Setores;
 using HowToDevelop.HealthFood.Setores.Infraestrutura;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
@@ -74,11 +78,17 @@ namespace HowToDevelop.HealthFood.Infraestrutura
                     entry.Property("DataCriacao").IsModified = false;
                 }
             }
+            
+            List<RaizAgregacao> entitiesWithNotifications = ChangeTracker
+                .Entries<RaizAgregacao>()
+                .Where(x => x.Entity.Notificacoes != null && x.Entity.Notificacoes.Any())
+                .Select( x => x.Entity)
+                .ToList();
 
             int result = await base.SaveChangesAsync(cancellationToken);
             if (result > 0)
             {
-                await _mediatorHandler.PublicarEventos(this);
+                await _mediatorHandler.PublicarEventos(entitiesWithNotifications);
             }
 
             return result;

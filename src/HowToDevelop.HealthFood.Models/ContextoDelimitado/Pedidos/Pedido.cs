@@ -12,7 +12,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Pedidos
 {
     public enum StatusPedido { Novo, EmAndamento, Fechado, Cancelado }
 
-    public sealed class Pedido: RaizAgregacao<int>
+    public sealed class Pedido: RaizAgregacao
     {
         [ExcludeFromCodeCoverage]
         private Pedido()

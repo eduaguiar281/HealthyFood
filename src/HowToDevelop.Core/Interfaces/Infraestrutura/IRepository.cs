@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HowToDevelop.Core.Entidade;
 
 namespace HowToDevelop.Core.Interfaces.Infraestrutura
 {
@@ -10,7 +7,7 @@ namespace HowToDevelop.Core.Interfaces.Infraestrutura
         IUnitOfWork UnitOfWork { get; }
     }
 
-    public interface IRepository<in T> : IRepository where T : IRaizAgregacao
+    public interface IRepository<in T> : IRepository where T : RaizAgregacao
     {
         void Adicionar(T data);
         void Remover(T data);

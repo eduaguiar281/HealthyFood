@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using HowToDevelop.Core.ObjetosDeValor;
+using HowToDevelop.HealthFood.Dominio.ContextoDelimitado.Setores.Application.Eventos;
 using HowToDevelop.HealthFood.Infraestrutura.Tests.Builders;
 using HowToDevelop.HealthFood.Setores;
 using Shouldly;
@@ -22,6 +23,7 @@ namespace HowToDevelop.HealthFood.Infraestrutura.Tests.Dominio.Setores
 
             //Assert
             setor.IsSuccess.ShouldBeTrue();
+            setor.Value.Notificacoes.Any(x => x.MensagemTipo == nameof(SetorIncluidoEvent)).ShouldBeTrue();
         }
 
 

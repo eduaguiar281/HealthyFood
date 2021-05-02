@@ -5,6 +5,7 @@ using HowToDevelop.HealthFood.Infraestrutura;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Threading.Tasks;
+using HowToDevelop.EventSourcing;
 using Xunit;
 
 namespace HowToDevelop.Dominio.Integration.Tests.Fixtures
@@ -28,9 +29,12 @@ namespace HowToDevelop.Dominio.Integration.Tests.Fixtures
         protected HealthFoodDbContextTestHelper _dbContextTestHelper;
         private string _connectionString;
         private readonly SqlServerDockerSettings _settings;
+        private readonly MongoDbDockerSettings _mongoDbDockerSettings;
 
         public HealthFoodDbContextTestFixture()
         {
+            EventStoreService.InitializeClasses();
+
             _dockerRegistries = new DockerRegistries();
 
             var configuration = new ConfigurationBuilder()
@@ -40,8 +44,11 @@ namespace HowToDevelop.Dominio.Integration.Tests.Fixtures
 
             _settings = configuration.GetSection("SqlServerDockerSettings").Get<SqlServerDockerSettings>()
                 ?? SqlServerDockerSettings.Default;
+            _mongoDbDockerSettings = configuration.GetSection("MongoDbDockerSettings").Get<MongoDbDockerSettings>()
+                ?? MongoDbDockerSettings.Default;
 
             _dockerRegistries.RegisterSqlServer2019(_dockerClient, _settings);
+            _dockerRegistries.RegisterMongoDb(_dockerClient, _mongoDbDockerSettings);
         }
         public async Task DisposeAsync()
         {
@@ -53,7 +60,7 @@ namespace HowToDevelop.Dominio.Integration.Tests.Fixtures
         {
             await _dockerRegistries.RunAsync();
             _connectionString = _settings.GetDatabaseConnectionString();
-            _dbContextTestHelper = new HealthFoodDbContextTestHelper(_connectionString);
+            _dbContextTestHelper = new HealthFoodDbContextTestHelper(_connectionString, _mongoDbDockerSettings);
             await _dbContextTestHelper.InitializeDatabase();
         }
 

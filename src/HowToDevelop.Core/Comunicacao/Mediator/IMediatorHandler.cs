@@ -6,7 +6,7 @@ namespace HowToDevelop.Core.Comunicacao.Mediator
 {
     public interface IMediatorHandler
     {
-        Task PublicarEvento<T>(T evento) where T : Evento;
+        Task PublicarEvento<T>(T evento) where T : IEventoDominio;
 
         Task<Result<T>> EnviarComando<T>(ICommand<T> comando);
 

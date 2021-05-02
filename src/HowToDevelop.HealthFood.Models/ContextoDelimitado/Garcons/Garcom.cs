@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace HowToDevelop.HealthFood.Garcons
 {
-    public sealed class Garcom: RaizAgregacao<int>
+    public sealed class Garcom: RaizAgregacao
     {
         [ExcludeFromCodeCoverage]
         private Garcom()

@@ -1,10 +1,10 @@
-﻿using HowToDevelop.Core.Comunicacao;
+﻿using HowToDevelop.Core.Comunicacao.Interfaces;
 using HowToDevelop.Core.Interfaces;
 using System.Collections.Generic;
 
 namespace HowToDevelop.Core.Entidade
 {
-    public abstract class RaizAgregacao<T> : Entidade<T>, IRaizAgregacao where T: struct
+    public abstract class RaizAgregacao<T> : Entidade<T>, IRaizAgregacao<T> where T: struct
     {
         protected RaizAgregacao()
         {
@@ -16,16 +16,16 @@ namespace HowToDevelop.Core.Entidade
 
         }
 
-        private List<Evento> _notificacoes;
-        public IReadOnlyCollection<Evento> Notificacoes => _notificacoes?.AsReadOnly();
+        private List<IEventoDominio> _notificacoes;
+        public IReadOnlyCollection<IEventoDominio> Notificacoes => _notificacoes?.AsReadOnly();
 
-        public void AdicionarEvento(Evento evento)
+        public void AdicionarEvento(IEventoDominio evento)
         {
-            _notificacoes ??= new List<Evento>();
+            _notificacoes ??= new List<IEventoDominio>();
             _notificacoes.Add(evento);
         }
 
-        public void RemoverEvento(Evento eventItem)
+        public void RemoverEvento(IEventoDominio eventItem)
         {
             _notificacoes?.Remove(eventItem);
         }
@@ -35,5 +35,18 @@ namespace HowToDevelop.Core.Entidade
             _notificacoes?.Clear();
         }
 
+    }
+
+    public abstract class RaizAgregacao : RaizAgregacao<int>
+    {
+        protected RaizAgregacao()
+        {
+
+        }
+        protected RaizAgregacao(int id)
+            : base(id)
+        {
+
+        }
     }
 }

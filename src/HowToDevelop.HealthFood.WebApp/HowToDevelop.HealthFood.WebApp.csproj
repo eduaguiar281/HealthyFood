@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HowToDevelop.EventSourcing\HowToDevelop.EventSourcing.csproj" />
     <ProjectReference Include="..\HowToDevelop.HealthFood.Models\HowToDevelop.HealthFood.Dominio.csproj" />
   </ItemGroup>
 

@@ -1,9 +1,4 @@
-﻿using HowToDevelop.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HowToDevelop.Core.Comunicacao
+﻿namespace HowToDevelop.Core.Comunicacao
 {
     public abstract class Mensagem
     {
@@ -16,7 +11,7 @@ namespace HowToDevelop.Core.Comunicacao
 
         public object Data { get; set; }
 
-        public TResult ConverterPara<TResult>() where TResult: IRaizAgregacao
+        public TResult ConverterPara<TResult>() where TResult : class
         {
             try
             {

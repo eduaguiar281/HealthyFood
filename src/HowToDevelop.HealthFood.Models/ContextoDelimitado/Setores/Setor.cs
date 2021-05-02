@@ -2,6 +2,7 @@
 using HowToDevelop.Core.Entidade;
 using HowToDevelop.Core.ObjetosDeValor;
 using HowToDevelop.Core.ValidacoesPadrao;
+using HowToDevelop.HealthFood.Dominio.ContextoDelimitado.Setores.Application.Eventos;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -9,7 +10,7 @@ using System.Linq;
 
 namespace HowToDevelop.HealthFood.Setores
 {
-    public sealed class Setor : RaizAgregacao<int>
+    public sealed class Setor : RaizAgregacao
     {
         [ExcludeFromCodeCoverage]
         private Setor()
@@ -100,7 +101,10 @@ namespace HowToDevelop.HealthFood.Setores
                 return Result.Failure<Setor>(error);
             }
 
-            return Result.Success(new Setor(nomeResult.Value, siglaResult.Value, id));
+            var setor = new Setor(nomeResult.Value, siglaResult.Value, id);
+            setor.AdicionarEvento(new SetorIncluidoEvent(nome, sigla));
+
+            return Result.Success(setor);
         }
     }
 }

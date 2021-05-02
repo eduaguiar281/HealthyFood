@@ -9,6 +9,13 @@ services:
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: aguiar
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    ports:
+      - "27017:27017"
   howtodevelop.healthfood.webapp:
     image: ${DOCKER_REGISTRY-}howtodevelophealthfoodwebapp
     build:
@@ -18,3 +25,4 @@ services:
       - ASPNETCORE_ENVIROMENT=Development
     depends_on:
       - sqlServer
+      - mongodb

@@ -1,0 +1,15 @@
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\bin\Debug\net5.0\HowToDevelop.Core.dll
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\HowToDevelop.EventSourcing.csprojAssemblyReference.cache
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\HowToDevelop.EventSourcing.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\HowToDevelop.EventSourcing.AssemblyInfoInputs.cache
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\HowToDevelop.EventSourcing.AssemblyInfo.cs
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\bin\Debug\net5.0\HowToDevelop.EventSourcing.deps.json
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\bin\Debug\net5.0\HowToDevelop.EventSourcing.dll
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\bin\Debug\net5.0\ref\HowToDevelop.EventSourcing.dll
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\bin\Debug\net5.0\HowToDevelop.EventSourcing.pdb
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\bin\Debug\net5.0\HowToDevelop.Core.pdb
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\HowToDevelop.EventSourcing.csproj.CoreCompileInputs.cache
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\HowToDevelop.EventSourcing.csproj.CopyComplete
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\HowToDevelop.EventSourcing.dll
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\ref\HowToDevelop.EventSourcing.dll
+C:\Users\eduag\source\repos\HealthyFood\src\HowToDevelop.EventSourcing\obj\Debug\net5.0\HowToDevelop.EventSourcing.pdb

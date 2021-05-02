@@ -1,18 +1,16 @@
-﻿using HowToDevelop.Core.Comunicacao;
-using System;
+﻿using HowToDevelop.Core.Comunicacao.Interfaces;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HowToDevelop.Core.Interfaces
 {
-    public interface IRaizAgregacao
+    public interface IRaizAgregacao<TKey> where TKey : struct
     {
+        TKey Id { get; }
+        IReadOnlyCollection<IEventoDominio> Notificacoes { get; }
 
-        IReadOnlyCollection<Evento> Notificacoes { get; }
+        void AdicionarEvento(IEventoDominio evento);
 
-        void AdicionarEvento(Evento evento);
-
-        void RemoverEvento(Evento eventItem);
+        void RemoverEvento(IEventoDominio eventItem);
 
         void LimparEventos();
 
